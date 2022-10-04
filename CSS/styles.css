@@ -46,7 +46,7 @@ right: 0%;
 top: 0%;
 bottom: 0%;
 
-background: url(/images/bg.png);
+background: url(../images/bg.png);
 background-position: center;
 background-size: cover;
 }
@@ -138,7 +138,7 @@ width: 375px;
 height: 153px;
 left: 0px;
 top: 0px;
-background: url(/images/delivery.png);
+background: url(../images/delivery.png);
 background-position: center;
 background-size: cover;
 
@@ -219,7 +219,7 @@ height: 130px;
 left: 98.5px;
 top: 0px;
 
-background: url(/images/pngegg.png);
+background: url(../images/pngegg.png);
 background-position: center;
 background-size: cover;
 
