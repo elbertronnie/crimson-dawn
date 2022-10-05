@@ -1,0 +1,403 @@
+*{
+    margin: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    position: relative;
+    width: 100%;
+
+    background: #FFFFFF;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    
+    width: 100%;
+    /* height: 637px; */
+    
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+/* .nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+
+    width: 1024px;
+    height: 52px;
+
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+} */
+
+.frame1{
+    width: 100%;
+    height: 211px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+
+    position: relative;
+}
+
+.bg{
+    width: 100%;
+    height: 211px;
+
+    background: url(../images/profileBG.png);
+    background-repeat: no-repeat;
+}
+
+.profile1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 32px;
+
+    position: absolute;
+    width: 269px;
+    left: 67px;
+    top: 19.92%;
+    bottom: 19.42%;
+
+}
+
+.pic{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+    
+    width: 128px;
+    height: 128px;
+    
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.pic2{
+    width: 128px;
+    height: 128px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.profileSvg{
+    position: absolute;
+    left: 6%;
+    top: 12%;
+}
+
+.bg1{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+    background: #F2F4F5;
+}
+
+.name1{
+    width: 109px;
+    height: 32px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #F7F9FA;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.frame2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    width: 100%;
+    height: 426px;
+
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.f2-1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    
+    width: 240px;
+    height: 426px;
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    position: relative;
+}
+
+.f2-11{
+    width: 240px;
+    height: 426px;
+
+    background: #F2F4F5;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.selectors{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+
+    position: absolute;
+    width: 117px;
+    left: 61px;
+    top: 15.96%;
+    bottom: 67.37%;
+
+}
+
+.profile{
+    width: 117px;
+    height: 24px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    
+    color: #000000;
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.orderHistory{
+    width: 117px;
+    height: 24px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+
+    color: #000000;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.f2-2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    /* width: 768px; */
+    height: 298px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 64px;
+
+    /* width: 530px; */
+    height: 298px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.entries{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 21px;
+    
+    /* width: 576px; */
+    height: 186px;
+    
+    flex: none;
+    order: 0;
+    /* align-self: stretch; */
+    flex-grow: 0;
+}
+
+.name{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+
+    /* width: 576px; */
+    height: 48px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.email{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+    
+    /* width: 576px; */
+    height: 48px;
+    
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.address{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 16px;
+
+    /* width: 576px; */
+    height: 48px;
+
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.text2{
+    width: 104px;
+    height: 24px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    display: flex;
+    align-items: center;
+    
+    color: #000000;
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.fields{
+    width: 360px;
+    height: 40px;
+    
+    border-radius: 8px;
+    
+    flex: none;
+    order: 1;
+    /* flex-grow: 1; */
+}
+
+.save{
+    width: 256px;
+    height: 48px;
+
+    background: #6B4EFF;
+    border-radius: 48px;
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+button {
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background: #F7F9FA;
+    border: 1px solid #6B4EFF;
+    color: #6b4eff;
+    transition: 0.2s;
+}
+
+input{
+    height: 32px;
+    border: 1px solid #6B4EFF;
+
+    background: #FFFFFF;
+
+    border: 1px solid #6B4EFF;
+    border-radius: 8px;
+    width: 100%;
+}
