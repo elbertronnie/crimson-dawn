@@ -68,6 +68,7 @@ body{
 
     background: url(../images/profileBG.png);
     background-repeat: no-repeat;
+    position: relative;
 }
 
 .profile1{
@@ -164,13 +165,30 @@ body{
 
 .f2-1{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0px;
+
+    width: 239px;
+    height: 426px;
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.back{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     padding: 0px;
+    gap: 64px;
     
-    width: 240px;
-    height: 426px;
+    width: 181px;
+    height: 229px;
     
     flex: none;
     order: 0;
@@ -179,30 +197,33 @@ body{
     position: relative;
 }
 
-.f2-11{
-    width: 240px;
-    height: 426px;
-
-    background: #F2F4F5;
-
+.line{
+    width: 227px;
+    height: 0px;
+    border: 1px solid #CDCFD0;
+    transform: rotate(90deg);
     flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 1;
+    order: 1;
+    flex-grow: 0;
+
+    position: absolute;
+    left: 64px;
 }
 
 .selectors{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: center; 
     padding: 0px;
     gap: 32px;
 
-    position: absolute;
     width: 117px;
-    left: 61px;
-    top: 15.96%;
-    bottom: 67.37%;
+    height: 71px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 
 }
 
@@ -243,13 +264,11 @@ body{
 .f2-2{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-items: center;
     gap: 10px;
-
     /* width: 768px; */
     height: 298px;
-
     flex: none;
     order: 1;
     flex-grow: 1;
@@ -259,13 +278,10 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding: 0px;
     gap: 64px;
-
-    /* width: 530px; */
+    width: 100%;
     height: 298px;
-
     flex: none;
     order: 0;
     align-self: stretch;
@@ -277,15 +293,15 @@ body{
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
-    gap: 21px;
-    
-    /* width: 576px; */
+    gap: 24px;
+    max-width: 640px;
     height: 186px;
-    
     flex: none;
     order: 0;
-    /* align-self: stretch; */
+    align-self: stretch;
     flex-grow: 0;
+    margin: 0px 64px;
+    flex-shrink: 1;
 }
 
 .name{
@@ -294,10 +310,8 @@ body{
     align-items: center;
     padding: 0px;
     gap: 16px;
-
-    /* width: 576px; */
+    width: 100%;
     height: 48px;
-
     flex: none;
     order: 0;
     align-self: stretch;
@@ -310,10 +324,8 @@ body{
     align-items: center;
     padding: 0px;
     gap: 16px;
-    
-    /* width: 576px; */
+    width: 100%;
     height: 48px;
-    
     flex: none;
     order: 1;
     align-self: stretch;
@@ -326,10 +338,8 @@ body{
     align-items: center;
     padding: 0px;
     gap: 16px;
-
-    /* width: 576px; */
+    width: 100%;
     height: 48px;
-
     flex: none;
     order: 2;
     align-self: stretch;
@@ -339,44 +349,38 @@ body{
 .text2{
     width: 104px;
     height: 24px;
-    
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
-
     display: flex;
     align-items: center;
-    
     color: #000000;
-    
     flex: none;
     order: 0;
     flex-grow: 0;
 }
 
 .fields{
-    width: 360px;
+    min-width: 160px;
     height: 40px;
-    
     border-radius: 8px;
-    
     flex: none;
     order: 1;
-    /* flex-grow: 1; */
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 .save{
     width: 256px;
     height: 48px;
-
     background: #6B4EFF;
     border-radius: 48px;
-
     flex: none;
     order: 1;
     flex-grow: 0;
+    margin: 0px 64px;
 }
 
 button {
