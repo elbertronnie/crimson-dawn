@@ -8,6 +8,14 @@ customElements.define('custom-footer',
             const shadowRoot = this.attachShadow({mode: 'open'});
             this.shadowRoot.innerHTML = `
 <style>
+    :host{
+        width: 100%;
+
+        /* Sky/Light */
+
+        background: #E3E5E6;
+    }
+
     .footer{
         /* Footer */
 
@@ -17,11 +25,9 @@ customElements.define('custom-footer',
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 32px 32px 64px;
-
-        /* Sky/Light */
-
-        background: #E3E5E6;
+        padding: 32px 64px;
+        max-width: 720px;
+        margin: 0 auto;
     }
     
     .left{

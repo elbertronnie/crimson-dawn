@@ -18,21 +18,32 @@ button {
   background: url(../images/bg.png);
 }
 
-#main {
+#container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  
   width: 100%;
-  height: 1624px;
+  
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0px;
   gap: 64px;
 
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 0%;
-  align-self: stretch;
+  width: 100%;
+
+  flex: none;
+  flex-grow: 0;
 }
 
 .frame1 {

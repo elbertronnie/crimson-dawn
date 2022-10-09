@@ -24,31 +24,11 @@ body{
     padding: 0px;
     
     width: 100%;
-    /* height: 637px; */
     
     flex: none;
-    order: 0;
     align-self: stretch;
     flex-grow: 1;
 }
-
-/* .nav{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 8px 16px;
-
-    width: 1024px;
-    height: 52px;
-
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(4px);
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-} */
 
 .frame1{
     width: 100%;
@@ -158,7 +138,6 @@ body{
     height: 426px;
 
     flex: none;
-    order: 2;
     align-self: stretch;
     flex-grow: 0;
 }
@@ -170,7 +149,7 @@ body{
     align-items: flex-start;
     padding: 0px;
 
-    width: 239px;
+    width: 200px;
     height: 426px;
 
     flex: none;
@@ -187,7 +166,7 @@ body{
     padding: 0px;
     gap: 64px;
     
-    width: 181px;
+    width: 160px;
     height: 229px;
     
     flex: none;
@@ -207,7 +186,7 @@ body{
     flex-grow: 0;
 
     position: absolute;
-    left: 64px;
+    left: 42px;
 }
 
 .selectors{
@@ -259,6 +238,25 @@ body{
     flex: none;
     order: 1;
     flex-grow: 0;
+}
+
+.logout{
+    width: 117px;
+    height: 24px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+
+    color: #D3180C;
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+
+    text-decoration: underline;
 }
 
 .f2-2{

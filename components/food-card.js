@@ -7,6 +7,10 @@ customElements.define('food-card',
         render(){
             this.shadowRoot.innerHTML = `
 <style>
+
+    :host{
+        align-self: stretch;
+    }
     .food-card{
         /* Count=Zero */
 
@@ -18,8 +22,8 @@ customElements.define('food-card',
         align-items: center;
         padding: 0px;
 
-        width: 452px;
-        height: 120px;
+        width: 100%;
+        /*height: 120px;*/
 
         /* Sky/Lighter */
 
@@ -30,6 +34,8 @@ customElements.define('food-card',
         border-radius: 16px;
         
         overflow: hidden
+
+    
     }
     
     .food-card-image{

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styleCart.css">
+    <script src="../components/food-card.js"></script>
+    <script src="../components/food-button.js"></script>
+    <script src="../components/food-type-icon.js"></script>
+    <script src="../components/rating-pill.js"></script>
+    <script src="../components/review-pill.js"></script>
+    <script src="../components/serving-pill.js"></script>
+    <script src="../components/custom-navbar.js"></script>
+    <script src="../components/custom-footer.js"></script>
+</head>
+<body>
+    <div class="main">
+        <custom-navbar></custom-navbar>
+        <div class="container">
+            <div class="container2">
+                <div class="frame1">
+                    <div class="heading">
+                        <div class="text1-1">Your Order</div>
+                        <div class="text1-2">Bill Summary</div>
+                    </div>
+                    <div class="itemsList">
+                        <div class="item">
+                            <div class="food">
+                                <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            </div>
+                            <div class="cost">
+                                ₹2000
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="food">
+                                <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            </div>
+                            <div class="cost">
+                                ₹2000
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="food">
+                                <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            </div>
+                            <div class="cost">
+                                ₹2000
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extra">
+                        <div class="text2-1">Delivery Charges</div>
+                        <div class="text2-2">₹0.00</div>
+                    </div>
+                    <div class="total">
+                        <div class="text3-1">Grand Total</div>
+                        <div class="text3-2">₹0.00</div>
+                    </div>
+                </div>
+                <div class="frame2">
+                    <div class="f2-1"> 
+                        <div class="head2">
+                            <div class="text4">
+                                Place The Order
+                            </div>
+                        </div>
+                        <div class="address">
+                            <svg class="pin" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28 13.3333C28 22.6666 16 30.6666 16 30.6666C16 30.6666 4 22.6666 4 13.3333C4 10.1507 5.26428 7.09841 7.51472 4.84797C9.76516 2.59753 12.8174 1.33325 16 1.33325C19.1826 1.33325 22.2348 2.59753 24.4853 4.84797C26.7357 7.09841 28 10.1507 28 13.3333Z" stroke="#090A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17.3333C18.2091 17.3333 20 15.5424 20 13.3333C20 11.1241 18.2091 9.33325 16 9.33325C13.7909 9.33325 12 11.1241 12 13.3333C12 15.5424 13.7909 17.3333 16 17.3333Z" stroke="#090A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>  
+                            <div class="delivery">
+                                At House no. 033, BH-1, IIITm Gwalior, MP
+                            </div>
+                        </div>
+                    </div>
+                    <div class="placeOrder">
+                        <button class="proceed">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <custom-footer></custom-footer>
+    </div>
+</body>
+</html>

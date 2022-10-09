@@ -10,13 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="styleOrder.css">
+    <script src="../components/food-card.js"></script>
+    <script src="../components/food-button.js"></script>
+    <script src="../components/food-type-icon.js"></script>
+    <script src="../components/rating-pill.js"></script>
+    <script src="../components/review-pill.js"></script>
+    <script src="../components/serving-pill.js"></script>
+    <script src="../components/custom-navbar.js"></script>
+    <script src="../components/custom-footer.js"></script>
 </head>
 <body>
     <div class="main">
-        <!-- <div class="nav">
-
-
-        </div> -->
+        <custom-navbar></custom-navbar>
         <div class="frame1">
             <div class="f1-1">
                 <div class="bg"></div>
@@ -42,6 +47,7 @@
                     <div class="selectors">
                         <a href="profile.html"><div class="profile">Profile</div></a>
                         <a href="orderHistory.html"><div class="orderHistory">Order History</div></a>
+                        <div class="logout">Log out</div>
                     </div>
                     <div class="line"></div>
                 </div>
@@ -56,8 +62,12 @@
                             <div class="restName">
                                 Chawla Chicken
                             </div>
-                            <div class="food">
-                                <!-- food cards -->
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <div class="total">
+                                <div class="text2-1">Total:</div>
+                                <div class="amount">₹2000</div>
                             </div>
                         </div>
                     </div>
@@ -69,18 +79,19 @@
                             <div class="restName">
                                 Chawla Chicken
                             </div>
-                            <div class="food">
-                                <!-- food cards -->
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <div class="total">
+                                <div class="text2-1">Total:</div>
+                                <div class="amount">₹2000</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div> 
-        <!-- <div class="footer">
-
-
-        </div> -->
+        <custom-footer></custom-footer>
     </div>
 </body>
 </html>

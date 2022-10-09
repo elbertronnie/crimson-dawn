@@ -28,6 +28,10 @@ input[type='text']{
     width: 100%;
 }
 
+    :host{
+        width: 100%;
+    }
+
     .navbar{
         /* Login=False */
 
