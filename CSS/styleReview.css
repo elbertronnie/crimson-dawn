@@ -1,0 +1,94 @@
+* {
+    font-family: 'Inter';
+    font-style: normal;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F2F4F5;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+input, button, textarea {
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    background-image: none;
+    background-color: #F2F4F5;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 5px;
+}
+input:focus, button:focus, textarea:focus {
+    outline: none;
+}
+textarea {
+    min-height: 64px;
+    resize: vertical;
+}
+button {
+    cursor: pointer;
+    font-weight: 500;
+}
+.review-card {
+    border: 1px solid black;
+    max-width: 980px;
+    background-color: #fff;
+    margin: 0 auto;
+    box-shadow: 0px 1px 24px 8px rgba(20, 20, 20, 0.08);
+    border-radius: 16px;
+}
+.review-header {
+    text-align: center;
+    padding: 8px;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    border-bottom: 1px solid black;
+}
+.review-body {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+.review-body__message {
+    max-height: 320px;
+    min-height: 50px;
+    border-radius: 16px;
+}
+.review-body button {
+    margin-top: 10px;
+    border-radius: 16px;
+    width: 64px;
+    align-self: flex-end;
+}
+
+.rating {
+    width: 208px;
+    height: 40px;
+    margin: 0 auto;
+    padding: 32px;
+}
+.rating label {
+    float: right;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.rating label:not(:first-of-type) {
+    padding-right: 2px;
+}
+.rating label:before {
+    content: "\2605";
+    font-size: 42px;
+    color: #E3E5E6;
+    line-height: 1;
+}
+.rating input {
+    display: none;
+}
+.rating input:checked ~ label:before, .rating:not(:checked) > label:hover:before, .rating:not(:checked) > label:hover ~ label:before {
+    color: #f9df4a;
+}

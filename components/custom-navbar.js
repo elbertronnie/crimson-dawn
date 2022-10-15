@@ -37,7 +37,7 @@ input[type='text']{
 
 
         /* Auto layout */
-
+        
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -46,6 +46,11 @@ input[type='text']{
         background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(4px);
         /* Note: backdrop-filter has minimal browser support */
+
+        position: fixed;
+        box-sizing: border-box;
+        width: 100%;
+        z-index: 1;
     }
 
     .left{

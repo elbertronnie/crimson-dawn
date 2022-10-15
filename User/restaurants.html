@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/styleRest.css">
+    <script src="../scripts/scriptRest.js"></script>
+    <script src="../components/food-card.js"></script>
+    <script src="../components/food-button.js"></script>
+    <script src="../components/food-type-icon.js"></script>
+    <script src="../components/rating-pill.js"></script>
+    <script src="../components/review-pill.js"></script>
+    <script src="../components/serving-pill.js"></script>
+    <script src="../components/custom-navbar.js"></script>
+    <script src="../components/custom-footer.js"></script>
+</head>
+<body>
+    <div class="container">
+        <custom-navbar></custom-navbar>
+        <div class="main">
+            <div class="frame1">
+                <div class="f1-1">
+                    <div class="image"><div id="rest_img"></div></div>
+                    <div class="rest_info">
+                        <div class="head">
+                            <div id="rest_name">Kwality Restaurant</div>
+                            <rating-pill id="rest_rating" rating="4"></rating-pill>
+                        </div>
+                        <div id="rest_foods">North Indian, Chinese, and many more</div>
+                        <div id="rest_address">IIITm Gwalior, Mp</div>
+                        <a href="./reviewRest.html"><div class="frame2">
+                            <div class="review">Reviews</div>   
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 21.3333L21.3334 16M21.3334 16L16 10.6667M21.3334 16H10.6667M29.3334 16C29.3334 23.3638 23.3638 29.3333 16 29.3333C8.63622 29.3333 2.66669 23.3638 2.66669 16C2.66669 8.6362 8.63622 2.66666 16 2.66666C23.3638 2.66666 29.3334 8.6362 29.3334 16Z" stroke="#090A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>   
+                        </div></a>
+                    </div>
+                </div>
+            </div>
+            <div class="frame2-1">
+                <div class="search">
+                    <form>
+                        <div class="finder">
+                        <div class="finder__outer">
+                            <div class="finder__inner">
+                            <div class="finder__icon" ref="icon"></div>
+                            <input class="finder__input" type="text" name="q" />
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+                </div>       
+            </div>
+            <div class="frame3">
+
+                <div class="foods">
+                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="7"></food-card>
+                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                </div>
+            </div>
+        </div>
+        <custom-footer></custom-footer>
+    </div>
+</body>
+</html>
