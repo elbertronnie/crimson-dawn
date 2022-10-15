@@ -14,29 +14,30 @@
     <div class="form-structor">
         <div class="signup">
             <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
-            <div class="form-holder">
-                <input type="text" class="input" placeholder="Name" />
-                <input type="email" class="input" placeholder="Email" />
-                <input type="password" class="input" placeholder="Password" />
-                <input type="password" class="input" placeholder="Confirm Password" />
-                <input type="text" class="input" placeholder="Address" />
-            </div>
-            <button class="submit-btn">Sign up</button>
+            <form action="/auth" method="post">
+                <div class="form-holder">
+                    <input type="text" class="input" placeholder="Name" name="name"/>
+                    <input type="email" class="input" placeholder="Email" name="email"/>
+                    <input type="password" class="input" placeholder="Password" name="password"/>
+                    <input type="password" class="input" placeholder="Confirm Password" name="con_password"/>
+                    <input type="text" class="input" placeholder="Address" name="address"/>
+                </div>
+                <input type="submit" class="submit-btn">
+            </form>
         </div>
         <div class="login slide-up">
             <div class="center">
                 <h2 class="form-title" id="login"><span>or</span>Log in</h2>
-                <div class="form-holder">
-                    <input type="email" class="input" placeholder="Email" />
-                    <input type="password" class="input" placeholder="Password" />
-                </div>
-                <button class="submit-btn">Log in</button>
+                <form action="/auth" method="post">
+                    <div class="form-holder">
+                        <input type="email" class="input" placeholder="Email" name="email"/>
+                        <input type="password" class="input" placeholder="Password" name="password"/>
+                    </div>
+                    <input type="submit" class="submit-btn">
+                </form>
             </div>
         </div>
     </div>
-    <style>
-
-    </style>
     <script>
 
         const loginBtn = document.getElementById('login');
