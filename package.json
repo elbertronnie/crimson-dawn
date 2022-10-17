@@ -1,0 +1,27 @@
+{
+  "name": "crimson-dawn",
+  "version": "1.0.0",
+  "description": "A food ordering website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elbertronnie/crimson-dawn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elbertronnie/crimson-dawn/issues"
+  },
+  "homepage": "https://github.com/elbertronnie/crimson-dawn#readme",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "pg": "^8.8.0"
+  }
+}
