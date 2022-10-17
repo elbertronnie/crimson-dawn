@@ -143,9 +143,9 @@ ${this.count == 0 ? this.zero() : this.more()}
             setTimeout(() => {
                 [['add', 'increment'], ['plus', 'increment'], ['minus', 'decrement']]
                     .map(([id, event]) => [this.shadowRoot.getElementById(id), event])
-                    .filter(([el, event]) => el !== null)
+                    .filter(([el, _]) => el !== null)
                     .forEach(([el, event]) => {
-                        el.addEventListener('click', (e) => {
+                        el.addEventListener('click', () => {
                             this.dispatchEvent(new CustomEvent(event, {
                                 bubbles: true,
                                 composed: true,
