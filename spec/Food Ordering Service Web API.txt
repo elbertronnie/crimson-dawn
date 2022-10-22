@@ -9,8 +9,8 @@ Food Ordering Service Web API v0.1
 /api/restaurant_details
 /api/edit_restaurant
 /api/edit_food_item
-
 /api/add_food_item
+
 /api/delete_food_item
 /api/upload_food_image
 /api/search_location

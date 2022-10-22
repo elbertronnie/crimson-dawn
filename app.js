@@ -7,10 +7,14 @@ import crypto from 'crypto';
 import pg from 'pg';
 
 // Connection details are specified through the .env file
-const pool = new pg.Pool();
+const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+});
 
 const app = express();
-const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -198,9 +202,9 @@ app.get('/api/edit_customer', restrict_customer, async (req, res) => {
     const client = pool.connect();
 
     try {
-        client.query("BEGIN");
+        await client.query("BEGIN");
 
-        pool.query(
+        await client.query(
             `UPDATE customers SET 
                 name = COALESCE($2, name),
                 email = COALESCE($3, email), 
@@ -211,20 +215,21 @@ app.get('/api/edit_customer', restrict_customer, async (req, res) => {
         );
 
         if(cart){
-            pool.query(`DELETE FROM carts WHERE customer_id=$1`, [req.session.customer_id]);
-            cart.forEach(({food_item_id, quantity}) => {
-                pool.query(
+            await client.query(`DELETE FROM carts WHERE customer_id=$1`, [req.session.customer_id]);
+            cart.map(async ({food_item_id, quantity}) => {
+                await client.query(
                     `INSERT INTO carts(customer_id, food_item_id, quantity) VALUES($1, $2, $3)`,
                     [req.session.customer_id, food_item_id, quantity]
                 );
             });
+            await Promise.all(cart);
         }
 
-        client.query("COMMIT");
+        await client.query("COMMIT");
 
         res.json({done: true});
     } catch(e) {
-        client.query("ROLLBACK");
+        await client.query("ROLLBACK");
         res.json({done: false});
     } finally {
         client.release();
@@ -274,9 +279,86 @@ app.delete('/api/delete_food_item_cart', restrict_customer, async (req, res) => 
     } catch(e) {
         res.json({ done: false });
     }
-
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.post('/api/edit_restaurant', restrict_restaurant, async (req, res) => {
+    let { name, email, password, address, tags } = req.body;
+
+    let password_hash = password ? await hash(password) : undefined;
+
+    const client = pool.connect();
+
+    try {
+        await client.query("BEGIN");
+
+        await client.query(
+            `UPDATE restaurants SET
+                name = COALESCE($2, name),
+                email = COALESCE($3, email),
+                password = COALESCE($4, password),
+                address = COALESCE($5, address)
+             WHERE restaurant_id=$1`,
+            [req.session.restaurant_id, name, email, password_hash, address]
+        );
+
+        if(tags){
+            await client.query(`DELETE FROM restaurant_tags WHERE restaurant_id=$1`, [req.session.restaurant_id]);
+            tags.map(async ({tag_id}) => {
+                await client.query(
+                    `INSERT INTO restaurant_tags(restaurant_id, tag_id) VALUES($1, $2)`,
+                    [req.session.restaurant_id, tag_id]
+                );
+            });
+            await Promise.all(tags);
+        }
+
+        await client.query("COMMIT");
+
+        res.json({done: true});
+    } catch(e) {
+        await client.query("ROLLBACK");
+        res.json({done: false});
+    } finally {
+        client.release();
+    }
+});
+
+app.post('/api/edit_food_item', restrict_restaurant, async (req, res) => {
+    let { food_item_id, food_name, price, veg, serving } = req.body;
+
+    try {
+        await pool.query(
+            `UPDATE food_items SET 
+                food_name = COALESCE($3, food_name),
+                price = COALESCE($4, price),
+                veg = COALESCE($5, veg),
+                serving = COALESCE($6, serving)
+            WHERE restaurant_id=$1 AND food_item_id=$2`,
+            [req.session.restaurant_id, food_item_id, food_name, price, veg, serving]
+        );
+        res.json({ done: true });
+    } catch(e) {
+        res.json({ done: false });
+    }
+});
+
+app.post('/api/add_food_item', restrict_restaurant, async (req, res) => {
+    let { food_name, price, veg, serving } = req.body;
+
+    try {
+        await pool.query(
+            `INSERT INTO food_items(restaurant_id, food_name, price, veg, serving)
+             VALUES($1, $2, $3, $4, $5)`,
+            [req.session.restaurant_id, food_name, price, veg, serving]
+        );
+        res.json({ done: true });
+    } catch(e) {
+        res.json({ done: false });
+    }
+});
+
+
+
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`);
 });
