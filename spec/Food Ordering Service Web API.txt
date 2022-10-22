@@ -1,0 +1,292 @@
+Food Ordering Service Web API v0.1
+
+
+/api/customer_details
+/api/edit_customer
+/api/add_food_item_cart
+/api/edit_food_item_cart
+/api/delete_food_item_cart
+/api/restaurant_details
+/api/edit_restaurant
+/api/edit_food_item
+
+/api/add_food_item
+/api/delete_food_item
+/api/upload_food_image
+/api/search_location
+/api/search_restaurants
+/api/search_food_items
+/api/food_item
+/api/restaurant
+/api/restaurant_orders
+/api/restaurant_order_complete
+/api/tags
+/api/add_tag
+
+
+GET /api/customer_details
+requires authentication as customer
+response: {
+    customer_id,
+    name,
+    email,
+    address,
+    cart: [{
+        food_item_id,
+        food_name,
+        restaurant: {
+            restaurant_id,
+            name,
+            address,
+            restaurant_image_url,
+        },
+        price,
+        veg,
+        serving,
+        food_image_url,
+        quantity,
+    }],
+}
+
+POST /api/edit_customer
+requires authentication as customer
+all fields in request are optional
+request: {
+    name,
+    email,
+    password,
+    address,
+    cart: [{
+        food_item_id,
+        quantity,
+    }],
+}
+response: {
+    done,
+}
+
+POST /api/add_food_item_cart
+requires authentication as customer
+request: {
+    food_item_id,
+    quantity,
+}
+response: {
+    done,
+}
+
+POST /api/edit_food_item_cart
+requires authentication as customer
+all fields in request are optional
+request: {
+    food_item_id,
+    quantity,
+}
+response: {
+    done,
+}
+
+DELETE /api/delete_food_item_cart
+requires authentication as customer
+request: {
+    food_item_id,
+}
+response: {
+    done,
+}
+
+GET /api/restaurant_details
+requires authentication as restaurant
+response: {
+    restaurant_id,
+    name,
+    email,
+    address,
+    restaurant_image_url,
+    tags: [],
+}
+
+POST /api/edit_restaurant
+requires authentication as restaurant
+all fields in request are optional
+request: {
+    name,
+    email,
+    password,
+    address,
+    tags: [{
+        tag_id,
+    }],
+}
+response: {
+    done,
+}
+
+POST /api/edit_food_item
+requires authentication as restaurant
+all fields in request are optional
+request: {
+    food_item_id,
+    food_name,
+    price,
+    veg,
+    serving,
+}
+response: {
+    done,
+}
+
+POST /api/upload_food_image
+requires authentication as restaurant
+Form submission(input type=file)
+id=
+image=
+
+POST /api/add_food_item
+requires authentication as restaurant
+request: {
+    food_name,
+    price,
+    veg,
+    serving,
+}
+response: {
+    food_item_id,
+    done,
+}
+
+DELETE /api/delete_food_item
+requires authentication as restaurant
+request: {
+    food_item_id,
+}
+response: {
+    done,
+}
+
+GET /api/search_location
+request: {
+    text:
+}
+response: {
+    results: [] // list of locations
+}
+
+GET /api/search_restaurants
+request: {
+    text:
+}
+response: [{
+    restaurant_id,
+    name,
+    address,
+    restaurant_image_url,
+    tags: [],
+}]
+
+GET /api/search_food_items
+request: {
+    text: 
+}
+response: [{
+    food_item_id,
+    restaurant: {same as result of /search_restaurant},
+    food_name,
+    price,
+    veg,
+    metadata, // may not be required
+    food_image_url,
+    rating,
+    num_reviews,
+    num_buys,
+}]
+
+GET /api/food_item
+request: {
+    food_item_id,
+}
+response:{
+    food_item_id,
+    restaurant: {same as result of /search_restaurant},
+    food_name,
+    price,
+    veg,
+    metadata, // may not be required
+    food_image_url,
+    rating,
+}
+
+GET /api/restaurant
+request: {
+    restaurant_id,
+}
+response: {
+    restaurant_id,
+    name,
+    address,
+    restaurant_image_url,
+    tags: [],
+    rating,
+    reviews: [{
+        name,
+        rating,
+        review,
+    }],
+    food_items: [{
+        food_item_id,
+        food_name,
+        price,
+        veg,
+        serving,
+        food_image_url,
+    }]
+}
+
+POST /api/restaurant_orders
+requires authentication as restaurant
+response: [{
+    order_id,
+    customer: {
+        customer_id,
+        name,
+        address,
+    },
+    timestamp,
+    orders: [{
+        food_item_id,
+        food_name,
+        price,
+        veg,
+        serving,
+        food_image_url,
+        quantity,
+    }]
+}]
+
+POST /api/restaurant_order_complete
+requires authentication as restaurant
+request: {
+    order_id,
+}
+response: {
+    done,
+}
+
+GET /api/tags
+request: {}
+response: {
+    result: [{
+        tag_id,
+        tag_name,
+    }]
+}
+
+POST /api/add_tag
+requires authentication as restaurant
+request: {
+    name,
+}
+response: {
+    tag_id,
+    done,
+}
