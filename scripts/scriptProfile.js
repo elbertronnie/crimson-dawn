@@ -36,12 +36,18 @@ window.onload = function(){
             'address': address.value
         }
 
-        fetch('/api/edit_customer', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(data)})
+        fetch('/api/edit_customer', {method: 'POST', headers: { 'Content-type': 'application/json'}, body: JSON.stringify(data)})
         .then((res)=>{
             console.log(res.json());
         })
         .catch((err)=>{
             console.log(err);
         })
+    })
+
+    document.getElementById('logout').addEventListener('click', ()=>{
+        fetch('/logout', {method: 'POST'})
+        .then(res => console.log(res.json()))
+        .catch(err => console.log(err))
     })
 }

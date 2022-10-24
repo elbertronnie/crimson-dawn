@@ -82,7 +82,7 @@ app.post('/register', async (req, res) => {
         [name, email, await hash(password), address]
     );
 
-    res.redirect('/');
+    res.redirect('/user/search.html');
 });
 
 app.post('/restaurant/register', async (req, res) => {
@@ -116,7 +116,7 @@ app.post('/login', async (req, res) => {
     req.session.regenerate(() => {
         req.session.customer_id = rows[0].customer_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('/');
+        res.redirect('./user/search.html');
     });
 });
 
@@ -136,7 +136,7 @@ app.post('/restaurant/login', async (req, res) => {
     req.session.regenerate(() => {
         req.session.restaurant_id = rows[0].restaurant_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('/');
+        res.redirect('./');
     });
 });
 
@@ -203,12 +203,12 @@ app.get('/api/restaurant_details', restrict_restaurant, async (req, res) => {
     res.json({...restaurant_result.rows[0], tags});
 });
 
-app.get('/api/edit_customer', restrict_customer, async (req, res) => {
+app.post('/api/edit_customer', restrict_customer, async (req, res) => {
     let { name, email, password, address, cart } = req.body;
 
     let password_hash = password ? await hash(password) : undefined;
 
-    const client = pool.connect();
+    const client = await pool.connect();
 
     try {
         await client.query("BEGIN");
@@ -295,7 +295,7 @@ app.post('/api/edit_restaurant', restrict_restaurant, async (req, res) => {
 
     let password_hash = password ? await hash(password) : undefined;
 
-    const client = pool.connect();
+    const client = await pool.connect();
 
     try {
         await client.query("BEGIN");
@@ -383,7 +383,7 @@ app.delete('/api/delete_food_item', restrict_restaurant, async (req, res) => {
     }
 });
 
-app.get('/api/get_food_item', async (req, res) => {
+app.post('/api/food_item', async (req, res) => {
     let { food_item_id } = req.body;
 
     try {
@@ -426,31 +426,30 @@ app.get('/api/get_food_item', async (req, res) => {
     }
 });
 
-app.get('/api/restaurant', async (req, res) => {
+app.post('/api/restaurant', async (req, res) => {
     let { restaurant_id } = req.body;
 
     try {
         let restaurant_result = await pool.query(
             `SELECT restaurant_id, name, address, restaurant_image_url, 
-             ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name)) tags 
-             FROM restaurant NATURAL JOIN restaurant_tags
+            COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
+              FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
+             FROM restaurants NATURAL LEFT OUTER JOIN restaurant_tags NATURAL LEFT OUTER JOIN tag
              WHERE restaurant_id=$1
              GROUP BY restaurant_id, name, address, restaurant_image_url`,
             [restaurant_id]
-        );
-
+        );1
         let review_result = await pool.query(
             `SELECT AVG(rating) AS rating, 
              ARRAY_AGG(JSON_BUILD_OBJECT(
                 'name', customers.name, 
                 'rating', rating, 
                 'review', review)) reviews
-             FROM review_restaurants NATURAL JOIN customers
+             FROM review_restaurants NATURAL LEFT OUTER JOIN customers
              WHERE restaurant_id=$1
              GROUP BY restaurant_id`,
             [restaurant_id]
         );
-
         let food_item_result = await pool.query(
             `SELECT ARRAY_AGG(JSON_BUILD_OBJECT(
                 'food_item_id', food_item_id, 
@@ -464,13 +463,14 @@ app.get('/api/restaurant', async (req, res) => {
              GROUP BY restaurant_id`,
             [restaurant_id]
         );
-
+        
         res.json({
             ...restaurant_result.rows[0],
             ...review_result.rows[0],
             ...food_item_result.rows[0],
         });
     } catch(e) {
+        console.log(e);
         res.json({});
     }
 });

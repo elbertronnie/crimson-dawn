@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../scripts/scriptReview.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="review-card">
+        <div class="review-header">Rating</div>
+        <div class="frame1">
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
+                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
+            </div>
+        </div>
+        <form class="review-body">
+            <button class="review-body__submit" id="post">Post</button>
+          </form>
+
+      <style>
+        * {
+            font-family: 'Inter';
+            font-style: normal;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F2F4F5;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        input, button{
+            border: 2px solid rgba(0, 0, 0, 0.6);
+            background-image: none;
+            background-color: #F2F4F5;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            padding: 5px;
+        }
+        input:focus, button:focus, textarea:focus {
+            outline: none;
+        }
+        
+        button {
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .review-card {
+            border: 1px solid black;
+            max-width: 980px;
+            min-height: 240px;
+            background-color: #fff;
+            margin: 0 auto;
+            box-shadow: 0px 1px 24px 8px rgba(20, 20, 20, 0.08);
+            border-radius: 16px;
+            background: #D2E0E0;
+        }
+        .review-header {
+            text-align: center;
+            padding: 8px;
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: 700;
+            border-bottom: 1px solid black;
+        }
+        .review-body {
+            padding: 0 32px;
+            display: flex;
+            flex-direction: column;
+        }
+        .review-body button {
+            margin-top: 10px;
+            border-radius: 16px;
+            width: 64px;
+            align-self: flex-end;
+        }
+
+        .rating {
+            width: 208px;
+            height: 40px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+        .rating label {
+            float: right;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        .rating label:not(:first-of-type) {
+            padding-right: 2px;
+        }
+        .rating label:before {
+            content: "\2605";
+            font-size: 42px;
+            color: #F2F4F5;
+            line-height: 1;
+        }
+        .rating input {
+            display: none;
+        }
+        .rating input:checked ~ label:before, .rating:not(:checked) > label:hover:before, .rating:not(:checked) > label:hover ~ label:before {
+            color: #f9df4a;
+        }
+
+        input{
+            border: black 1px solid;
+        }
+      </style>
+      <script>
+        let rating = -1;
+        document.querySelectorAll('input').forEach((ele)=>{
+            ele.addEventListener('click',(event)=>{
+                rating = event.target.value;
+            })
+        })
+        document.getElementById('post').addEventListener('click', ()=>{
+            let food_id = (new URL(document.location)).searchParams.get('food_item_id');
+            if(rating == -1){
+                console.log('Rating is required');
+                alert('Rating is necessary');
+            }
+            else{
+                let data = {
+                    'rating': rating,
+                    'food_item_id': food_id
+                };
+                fetch('/api/add_rating', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(data)})
+                .then(()=> console.log('Review posted'))
+                .catch(err=>console.log(err))
+            }
+        })
+      </script>
+</body>
+</html>

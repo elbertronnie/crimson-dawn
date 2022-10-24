@@ -1,7 +1,7 @@
 const { event } = require("jquery");
 
 window.onload = ()=>{
-    fetch('/api/search_restaurants?search='+'', {method: 'GET'})
+    fetch('/api/search_restaurants', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'text': ''})})
     .then(( res => res.json()))
     .then((data)=>{
         if(data.length == 0){
@@ -19,7 +19,7 @@ window.onload = ()=>{
     .then(()=>{
         document.querySelectorAll('restuarant-cards').forEach((ele)=>{
             ele.addEventListener('click',(event)=>{
-                fetch('/api/restaurant?restaurant_id='+event.target.restaurant_id, {method: 'GET'})
+                fetch('/api/restaurant', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.restaurant_id})})
                 .then(res => res.json())
                 .catch((err)=> console.log(err))
             })
@@ -28,7 +28,7 @@ window.onload = ()=>{
     .catch((err) => console.log(err))
 
 
-    fetch('/api/search_food_items?search='+'', {method: 'GET'})
+    fetch('/api/search_food_items',{method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'text': ''})})
     .then( res => res.json())
     .then((data)=>{
         if(data.length == 0){
@@ -60,7 +60,7 @@ window.onload = ()=>{
     document.getElementById('lens').addEventListener('click', ()=>{
         let value = document.getElementById('search').value;
 
-        fetch('/api/search_restaurants?search='+'', {method: 'GET'})
+        fetch('/api/search_restaurants', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'text': value})})
         .then(( res => res.json()))
         .then((data)=>{
             if(data.length == 0){
@@ -78,7 +78,7 @@ window.onload = ()=>{
         .then(()=>{
             document.querySelectorAll('restuarant-cards').forEach((ele)=>{
                 ele.addEventListener('click',(event)=>{
-                    fetch('/api/restaurant?restaurant_id='+event.target.restaurant_id, {method: 'GET'})
+                    fetch('/api/restaurant'+event.target.restaurant_id, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.restaurant_id})})
                     .then(res => res.json())
                     .catch((err)=> console.log(err))
                 })
@@ -87,7 +87,7 @@ window.onload = ()=>{
         .catch((err) => console.log(err))
 
 
-        fetch('/api/search_food_items?search='+'', {method: 'GET'})
+        fetch('/api/search_food_items', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'text': value})})
         .then(( res => res.json()))
         .then((data)=>{
             if(data.length == 0){

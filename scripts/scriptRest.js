@@ -1,26 +1,28 @@
 window.onload = function(){
 
     let food;
-    let rest_id = (new URL(document.location)).searchParams.get('restaurant_id');
-    fetch('/api/restaurant?restaurant_id='+ rest_id, {method: 'GET'})
+    let rest_id = Number((new URL(document.location)).searchParams.get('restaurant_id'));
+    console.log(rest_id);
+    fetch('/api/restaurant', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': rest_id})})
     .then((res)=>{
         return res.json();
     })
     .then((data)=>{
-
+        console.log(data);
         food = data.food_items;
         let cards = '';
         document.getElementById('rest-name').innerHTML = data.name;
         document.getElementById('rest-address').innerHTML = data.address;
         document.getElementById('rest-rating').innerHTML = data.rating;
-        document.getElementById('rest-img').style.backgroundImage().url = data.restaurant_image_url;
+        document.getElementById('rest-img').style.backgroundImage.url = data.restaurant_image_url;
         data.tags.forEach((tag) => {
-            document.getElementById('rest-tags').innerHTML += tag;
+            document.getElementById('rest-tags').innerHTML += tag.tag_name;
         });
         data.food_items.forEach((item)=>{
             let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
             cards += card;
         });
+        console.log(cards);
         document.getElementById('food-cards').innerHTML = cards;
     })
     .catch((err)=>{
