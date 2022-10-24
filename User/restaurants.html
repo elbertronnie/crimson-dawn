@@ -20,19 +20,19 @@
     <script src="../components/custom-footer.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container"> 
         <custom-navbar></custom-navbar>
         <div class="main">
             <div class="frame1">
                 <div class="f1-1">
-                    <div class="image"><div id="rest_img"></div></div>
-                    <div class="rest_info">
+                    <div class="image"><div id="rest-img"></div></div>
+                    <div class="rest-info">
                         <div class="head">
-                            <div id="rest_name">Kwality Restaurant</div>
-                            <rating-pill id="rest_rating" rating="4"></rating-pill>
+                            <div id="rest-name"></div>
+                            <rating-pill id="rest-rating"></rating-pill>
                         </div>
-                        <div id="rest_foods">North Indian, Chinese, and many more</div>
-                        <div id="rest_address">IIITm Gwalior, Mp</div>
+                        <div id="rest-tags"></div>
+                        <div id="rest-address"></div>
                         <a href="./reviewRest.html"><div class="frame2">
                             <div class="review">Reviews</div>   
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,27 +43,15 @@
                 </div>
             </div>
             <div class="frame2-1">
-                <div class="search">
-                    <form>
-                        <div class="finder">
-                        <div class="finder__outer">
-                            <div class="finder__inner">
-                            <div class="finder__icon" ref="icon"></div>
-                            <input class="finder__input" type="text" name="q" />
-                            </div>
-                        </div>
-                        </div>
-                    </form>
-                </div>       
+                <input type="text" name="search" id="search">
+                <div id="lens">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28 28L22.2 22.2M25.3333 14.6667C25.3333 20.5577 20.5577 25.3333 14.6667 25.3333C8.77563 25.3333 4 20.5577 4 14.6667C4 8.77563 8.77563 4 14.6667 4C20.5577 4 25.3333 8.77563 25.3333 14.6667Z" stroke="#090A0A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
             </div>
             <div class="frame3">
-
-                <div class="foods">
-                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
-                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
-                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="7"></food-card>
-                    <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
-                </div>
+                <div id="food-cards"></div>
             </div>
         </div>
         <custom-footer></custom-footer>

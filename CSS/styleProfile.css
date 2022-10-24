@@ -364,7 +364,15 @@ body{
     flex-shrink: 1;
 }
 
-.save{
+.change{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 64px;
+    gap: 64px;
+}
+
+#edit{
     width: 256px;
     height: 48px;
     background: #6B4EFF;
@@ -372,19 +380,39 @@ body{
     flex: none;
     order: 1;
     flex-grow: 0;
-    margin: 0px 64px;
+}
+#save{
+    width: 256px;
+    height: 48px;
+    background: #6B4EFF;
+    border-radius: 48px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 }
 
-button {
+#edit, #save {
     color: white;
     border: none;
 }
 
-button:hover {
-    background: #F7F9FA;
+#edit:hover, #save:hover {
     border: 1px solid #6B4EFF;
     color: #6b4eff;
+    background: #F7F9FA;
     transition: 0.2s;
+}
+
+#save:disabled{
+    background: #FFFFFF;
+    color: #979C9E;
+    border: #202325 1px solid;
+}
+
+#edit:disabled{
+    background: #FFFFFF;
+    color: #979C9E;
+    border: #202325 1px solid;
 }
 
 input{
