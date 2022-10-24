@@ -25,6 +25,7 @@ app.use(session({
 }));
 
 app.use(express.static("Auth"));
+app.use(express.static("."));
 
 
 async function hash(password) {

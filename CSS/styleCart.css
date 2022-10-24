@@ -127,7 +127,7 @@ body{
     flex-grow: 0;
 }
 
-.itemsList{
+#itemsList{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -222,7 +222,6 @@ body{
     color: #000000;
 
     flex: none;
-    order: 0;
     flex-grow: 1;
 }
 
@@ -237,7 +236,6 @@ body{
     color: #000000;
 
     flex: none;
-    order: 1;
     flex-grow: 1;
 }
 
@@ -295,31 +293,16 @@ body{
 
 .frame2{
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    padding: 32px 64px 64px 64px;
+    flex-direction: column;
+    align-items:flex-start;
+    padding: 0 64px;
 
     min-height: 80px;
-
+    gap: 32px;
     flex: none;
     order: 1;
     align-self: stretch;
     flex-grow: 0;
-}
-
-.f2-1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    
-    max-width: 632px;
-    height: 100%;
-    
-    flex: none;
-    order: 0;
-    flex-grow: 1;
 }
 
 .head2{
@@ -353,12 +336,25 @@ body{
     flex-grow: 1;
 }
 
-.address{
+.text4-1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: right;
+
+    color: #000000;
+
+    flex: none;
+}
+
+.add{
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px;
-    gap: 12px;
+    gap: 64px;
     /* width: 632px; */
     min-height: 48px;
     flex: none;
@@ -367,61 +363,48 @@ body{
     flex-grow: 0;
 }
 
-.delivery{
-    max-width: 240px;
-    min-height: 48px;
-    
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    
-    color: #000000;
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    align-self: stretch;
-}
-
 .placeOrder{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-    padding: 0px;
     gap: 10px;
     
     width: 264px;
     height: 48px;
-    
+    padding-bottom: 32px;
     flex: none;
     order: 1;
     flex-grow: 0;
+    align-self: end;
 }
 
-.proceed{
+#address{
+    max-width: 360px;
+    height: 48px;
+    background: #FFFFFF;
+    border: 1px solid;
+    border-radius: 16px;
+    flex: none;
+    align-self: stretch;
+    flex-grow: 1;
+    padding: 0 16px;
+}
+
+#proceed{
     width: 264px;
     height: 48px;
 
     background: #6B4EFF;
     border-radius: 48px;
-
+    color: white;
+    border: none;
     flex: none;
     order: 0;
     flex-grow: 0;
 }
 
-button {
-    color: white;
-    border: none;
-}
-
-button:hover {
+#proceed:hover {
     background: #F7F9FA;
     border: 1px solid #6B4EFF;
     color: #6b4eff;

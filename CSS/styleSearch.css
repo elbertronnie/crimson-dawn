@@ -30,7 +30,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 64px;
+    padding: 64px;
     gap: 48px;
     flex: none;
     align-self: stretch;
@@ -51,7 +51,7 @@
     flex-grow: 0;
 }
 
-.search{
+#search{
     max-width: 560px;
     height: 48px;
     background: #FFFFFF;
@@ -61,6 +61,7 @@
     order: 0;
     align-self: stretch;
     flex-grow: 1;
+    padding: 0 16px;
 }
 
 .svg{
@@ -98,7 +99,6 @@
 
 .text1{
 
-    padding: 0 64px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -143,10 +143,15 @@
 
 #content {
     display: grid;
-    grid-gap: 16px;
+    grid-gap: 48px;
     grid-auto-flow: column;
     margin: auto;
     box-sizing: border-box;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 48px;
+    line-height: 54px;
 }
 
 .item {
@@ -156,19 +161,22 @@
     background: #E7E7FF;
 }
 
-.frame3{
+#frame3{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     gap: 16px;
-
-    padding: 0 64px;
     
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 48px;
+    line-height: 54px;
 }
 
 .text2{
@@ -188,21 +196,26 @@
     flex-grow: 0;
 }
 
-.cards{
-    display: flex;
-    flex-direction: row;
+#cards{
+    min-height: 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     justify-content: space-between;
-    align-items: center;
     padding: 0px;
-    gap: 64px;
-    
+    grid-gap: 64px;
     flex: none;
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+    align-items: center;
+    align-content: center;
 }
 
-.lens{
+food-card{
+    max-width: 480px;
+}
+
+#lens{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -221,7 +234,7 @@
     background-color: #C6C4FF;
 }
 
-.lens:hover{
+#lens:hover{
     box-shadow: 0px 1px 24px 8px rgba(20, 20, 20, 0.08);
     background-color: #6B4EFF;
     transition: 0.5s;

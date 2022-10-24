@@ -69,7 +69,7 @@ body{
     flex-grow: 0;
 }
 
-#rest_name{
+#rest-name{
     /* width: 658px; */
     
     font-family: 'Inter';
@@ -85,7 +85,7 @@ body{
     flex-grow: 1;
 }
 
-#rest_foods, #rest_address{
+#rest-foods, #rest-address{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -120,7 +120,7 @@ body{
     flex-grow: 0;
 }
 
-#rest_img{
+#rest-img{
     background: url(../images/Restaurants_images/Rest_1.png);
     width: 100%;
     flex: none;
@@ -161,7 +161,7 @@ body{
     flex-grow: 0;
 }
 
-.frame3{
+#frame3{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -169,12 +169,17 @@ body{
     padding: 0px;
     gap: 8px;
 
-    width: 736px;
+    min-height: 80px;
 
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 48px;
+    line-height: 54px;
 }
 
 .unit{
