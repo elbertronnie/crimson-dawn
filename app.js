@@ -432,20 +432,22 @@ app.post('/api/restaurant', async (req, res) => {
     try {
         let restaurant_result = await pool.query(
             `SELECT restaurant_id, name, address, restaurant_image_url, 
-            COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
-              FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
+             COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
+                      FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
              FROM restaurants NATURAL LEFT OUTER JOIN restaurant_tags NATURAL LEFT OUTER JOIN tag
              WHERE restaurant_id=$1
              GROUP BY restaurant_id, name, address, restaurant_image_url`,
             [restaurant_id]
-        );1
+        );
+
         let review_result = await pool.query(
             `SELECT AVG(rating) AS rating, 
-             ARRAY_AGG(JSON_BUILD_OBJECT(
+             COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT(
                 'name', customers.name, 
                 'rating', rating, 
-                'review', review)) reviews
-             FROM review_restaurants NATURAL LEFT OUTER JOIN customers
+                'review', review)) 
+             FILTER (WHERE rating IS NOT NULL), '{}') AS reviews
+             FROM restaurants NATURAL LEFT OUTER JOIN review_restaurants NATURAL LEFT OUTER JOIN customers
              WHERE restaurant_id=$1
              GROUP BY restaurant_id`,
             [restaurant_id]
@@ -470,7 +472,43 @@ app.post('/api/restaurant', async (req, res) => {
             ...food_item_result.rows[0],
         });
     } catch(e) {
-        console.log(e);
+        res.json({});
+    }
+});
+
+app.post('/api/restaurant_card', async (req, res) => {
+    let { restaurant_id } = req.body;
+
+    try {
+        let restaurant_result = await pool.query(
+            `SELECT restaurant_id, name, address, restaurant_image_url, 
+            COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
+              FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
+             FROM restaurants NATURAL LEFT OUTER JOIN restaurant_tags NATURAL LEFT OUTER JOIN tag
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id, name, address, restaurant_image_url`,
+            [restaurant_id]
+        );
+
+        let review_result = await pool.query(
+            `SELECT AVG(rating) AS rating, COUNT(rating) as num_reviews
+             FROM restaurants NATURAL LEFT OUTER JOIN review_restaurants
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id`,
+            [restaurant_id]
+        );
+
+        let order_result = await pool.query(
+            `SELECT SUM(quantity) as num_buys FROM orders NATURAL JOIN food_items WHERE restaurant_id=$1`,
+            [restaurant_id]
+        );
+
+        res.json({
+            ...restaurant_result.rows[0],
+            ...review_result.rows[0],
+            ...order_result.rows[0], 
+        });
+    } catch(e) {
         res.json({});
     }
 });
@@ -607,6 +645,34 @@ app.post('/api/add_review', restrict_customer, async (req, res) => {
     } catch(e){
         res.json({ done: false });
     }
+});
+
+app.post('/api/customer_orders', restrict_customer, async (req, res) => {
+    let result = await pool.query(
+        `SELECT ARRAY_AGG(JSON_BUILD_OBJECT(
+            'order_id', order_id,
+            'food_item', JSON_BUILD_OBJECT(
+                'food_item_id', food_item_id,
+                'food_name', food_name,
+                'price', price,
+                'veg', veg,
+                'serving', serving,
+                'food_image_url', food_image_url,
+                'restaurant', JSON_BUILD_OBJECT(
+                    'restaurant_id', restaurant_id,
+                    'name', restaurants.name,
+                    'address', restaurants.address,
+                    'restaurant_image_url', restaurant_image_url)),
+            'quantity', quantity,
+            'timestamp', timestamp,
+            'delivery_location', delivery_location)) orders 
+         FROM orders NATURAL JOIN food_items NATURAL JOIN restaurants
+         WHERE customer_id=$1 AND completed=$2
+         GROUP BY customer_id`,
+        [req.session.customer_id, req.body.completed]
+    );
+
+    res.json(result.rows[0]);
 });
 
 app.listen(process.env.PORT, () => {

@@ -230,7 +230,7 @@ customElements.define('food-card',
         </div>
     </div>
 
-    <food-button count=${this.count} id="count"></food-button>
+    <food-button count=${this.count} id="count" edit="${this.edit}"></food-button>
 
 </div>
 `;        
@@ -240,10 +240,55 @@ customElements.define('food-card',
             const shadowRoot = this.attachShadow({mode: 'open'});
             this.render();
             this.rendered = true;
+
+            setTimeout(async () => {
+                if(!this.food_item_id) return;
+                let data = await (await fetch('/api/food_item', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ food_item_id: this.food_item_id })
+                })).json();
+                this.title = data.food_name;
+                this.price = data.price;
+                this.image = data.food_image_url;
+                this.type = data.veg ? 'veg' : 'non-veg';
+                this.rating = data.rating;
+                this.review = data.num_reviews;
+                this.serving = data.serving;
+                if(!this.count) this.count = 0;
+            }, 0);
+
+            setTimeout(async () => {
+                const count = shadowRoot.getElementById("count");
+                count.addEventListener('increment', async () => {
+                    const url = this.count ? '/api/edit_food_item_cart' : '/api/add_food_item_cart';
+                    const data = await (await fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            food_item_id: this.food_item_id,
+                            quantity: this.count+1,
+                        }),
+                    })).json();
+                    if(data.done) this.count++;
+                });
+                count.addEventListener('decrement', async () => {
+                    const url = this.count-1 ? '/api/edit_food_item_cart' : '/api/delete_food_item_cart';
+                    const data = await (await fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            food_item_id: this.food_item_id,
+                            quantity: this.count-1,
+                        }),
+                    })).json();
+                    if(data.done) this.count--;
+                });
+            }, 0);
         }
         
         static get observedAttributes() { 
-            return ['image', 'title', 'price', 'rating', 'review', 'serving', 'type', 'count']; 
+            return ['food-item-id', 'image', 'title', 'price', 'rating', 'review', 'serving', 'type', 'count', 'edit']; 
         }
         
         attributeChangedCallback(name, oldValue, newValue) {
@@ -256,16 +301,30 @@ customElements.define('food-card',
             } else if(name === "price" && oldValue !== newValue){
                 this.shadowRoot.getElementById('price').textContent = newValue;
             } else if(name === "rating" && oldValue !== newValue){
-                this.shadowRoot.getElementById('rating').rating = newValue;
+                const rating = this.shadowRoot.getElementById('rating');
+                rating.rating = newValue;
+                rating.style.visibility = newValue == null ? 'hidden' : 'visible';
             } else if(name === "review" && oldValue !== newValue){
-                this.shadowRoot.getElementById('review').review = newValue;
+                const review = this.shadowRoot.getElementById('review');
+                review.review = newValue;
+                review.style.visibility = newValue == null ? 'hidden' : 'visible';
             } else if(name === "serving" && oldValue !== newValue){
                 this.shadowRoot.getElementById('serving').serving = newValue;
             } else if(name === "type" && oldValue !== newValue){
                 this.shadowRoot.getElementById('type').type = newValue;
             } else if(name === "count" && oldValue !== newValue){
                 this.shadowRoot.getElementById('count').count = newValue;
-            }
+            } else if(name === "edit" && oldValue !== newValue){
+                this.shadowRoot.getElementById('count').edit = newValue;
+            } 
+        }
+
+        get food_item_id(){
+            return this.getAttribute("food-item-id");
+        }
+
+        set food_item_id(value){
+            this.setAttribute("food-item-id", value);
         }
         
         get image(){
@@ -331,6 +390,14 @@ customElements.define('food-card',
         
         set count(value){
             this.setAttribute("count", value);
+        }
+
+        get edit(){
+            return this.getAttribute("edit");
+        }
+        
+        set edit(value){
+            this.setAttribute("edit", value);
         }
     }
 );

@@ -80,6 +80,7 @@ customElements.define('food-button',
     .plus-circle{
         /* plus-circle */
 
+        visibility: ${this.edit ? 'visible' : 'hidden'};
 
         width: 16px;
         height: 16px;
@@ -123,7 +124,8 @@ customElements.define('food-button',
 
     .minus-circle{
         /* minus-circle */
-
+        
+        visibility: ${this.edit ? 'visible' : 'hidden'};
 
         width: 16px;
         height: 16px;
@@ -162,13 +164,15 @@ ${this.count == 0 ? this.zero() : this.more()}
         }
         
         static get observedAttributes() { 
-            return ['count']; 
+            return ['count', 'edit']; 
         }
         
         attributeChangedCallback(name, oldValue, newValue) {
             if(!this.rendered) return;
             
             if(name === "count" && oldValue !== newValue){
+                this.render();
+            } else if(name === "edit" && oldValue !== newValue){
                 this.render();
             }
         }
@@ -180,5 +184,14 @@ ${this.count == 0 ? this.zero() : this.more()}
         set count(value){
             this.setAttribute("count", value);
         }
+
+        get edit(){
+            return this.getAttribute("edit");
+        }
+        
+        set edit(value){
+            this.setAttribute("edit", value);
+        }
+
     }
 );

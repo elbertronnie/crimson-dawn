@@ -220,6 +220,13 @@ input[type='text']{
     <div class="right">${this.username !== null ? this.user() : this.login()}</div>
 </div>
 `;
+        }
+        
+        connectedCallback(){
+            const shadowRoot = this.attachShadow({mode: 'open'});
+            this.render();
+            this.rendered = true;
+
             setTimeout(async () => {
                 let { customer_id, restaurant_id } = await (await fetch('/api/get_id')).json();
                 if(customer_id){
@@ -231,12 +238,6 @@ input[type='text']{
                     this.username = restaurant_id;
                 }
             }, 0);
-        }
-        
-        connectedCallback(){
-            const shadowRoot = this.attachShadow({mode: 'open'});
-            this.render();
-            this.rendered = true;
         }
         
         static get observedAttributes() { 

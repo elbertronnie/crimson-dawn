@@ -22,8 +22,9 @@ Food Ordering Service Web API
 /api/place_order
 /api/add_rating
 /api/add_review
-
+/api/restaurant_card
 /api/customer_orders
+
 /api/search_restaurants
 /api/search_food_items
 
@@ -249,6 +250,7 @@ response:{
     food_image_url,
     rating,
     num_reviews,
+    serving,
     num_buys,
 }
 
@@ -388,5 +390,24 @@ response: {
         },
         quantity,
         timestamp,
+        delivery_location,
     }]
+}
+
+POST /api/restaurant_card
+request: {
+    restaurant_id,
+}
+response: {
+    restaurant_id,
+    name,
+    address,
+    restaurant_image_url,
+    tags: [{
+        tag_id,
+        tag_name,
+    }],
+    rating,
+    num_reviews,
+    num_buys,
 }
