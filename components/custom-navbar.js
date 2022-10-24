@@ -220,18 +220,16 @@ input[type='text']{
     <div class="right">${this.username !== null ? this.user() : this.login()}</div>
 </div>
 `;
-            setTimeout(() => {
-                [['add', 'increment'], ['plus', 'increment'], ['minus', 'decrement']]
-                    .map(([id, event]) => [this.shadowRoot.getElementById(id), event])
-                    .filter(([el, event]) => el !== null)
-                    .forEach(([el, event]) => {
-                        el.addEventListener('click', (e) => {
-                            this.dispatchEvent(new CustomEvent(event, {
-                                bubbles: true,
-                                composed: true,
-                            }));
-                        });
-                    });
+            setTimeout(async () => {
+                let { customer_id, restaurant_id } = await (await fetch('/api/get_id')).json();
+                if(customer_id){
+                    let { address } = await (await fetch('/api/customer_details')).json()
+                    this.username = customer_id;
+                    this.location = address;
+                }
+                if(restaurant_id){
+                    this.username = restaurant_id;
+                }
             }, 0);
         }
         

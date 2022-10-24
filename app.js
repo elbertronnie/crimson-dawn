@@ -5,6 +5,9 @@ import express from 'express';
 import session from 'express-session';
 import crypto from 'crypto';
 import pg from 'pg';
+import multer from 'multer';
+
+const upload = multer({ dest: 'uploads/' })
 
 // Connection details are specified through the .env file
 const pool = new pg.Pool({
@@ -144,6 +147,10 @@ app.post('/logout', (req, res) => {
 });
 
 
+app.get('/api/get_id', async (req, res) => {
+    res.json({ customer_id: req.session.customer_id, restaurant_id: req.session.restaurant_id });
+});
+
 app.get('/api/customer_details', restrict_customer, async (req, res) => {
 
     let customer_result = await pool.query(
@@ -151,7 +158,8 @@ app.get('/api/customer_details', restrict_customer, async (req, res) => {
         [req.session.customer_id]
     );
     let cart_result = await pool.query(
-        `SELECT food_item_id, food_name, price, veg, serving, food_image_url, restaurant_id, name, address, restaurant_image_url, quantity 
+        `SELECT food_item_id, food_name, price, veg, serving, food_image_url, 
+                restaurant_id, name, address, restaurant_image_url, quantity 
          FROM carts NATURAL JOIN food_items NATURAL JOIN restaurants WHERE customer_id=$1`,
         [req.session.customer_id]
     );
@@ -346,10 +354,27 @@ app.post('/api/add_food_item', restrict_restaurant, async (req, res) => {
     let { food_name, price, veg, serving } = req.body;
 
     try {
-        await pool.query(
+        let result = await pool.query(
             `INSERT INTO food_items(restaurant_id, food_name, price, veg, serving)
-             VALUES($1, $2, $3, $4, $5)`,
+             VALUES($1, $2, $3, $4, $5) RETURNING food_item_id`,
             [req.session.restaurant_id, food_name, price, veg, serving]
+        );
+        res.json({ 
+            food_item_id: result.rows[0].food_item_id, 
+            done: true, 
+        });
+    } catch(e) {
+        res.json({ done: false });
+    }
+});
+
+app.delete('/api/delete_food_item', restrict_restaurant, async (req, res) => {
+    let { food_item_id } = req.body;
+
+    try {
+        await pool.query(
+            `DELETE FROM food_items WHERE food_item_id=$2 AND restaurant_id=$1`,
+            [req.session.restaurant_id, food_item_id]
         );
         res.json({ done: true });
     } catch(e) {
@@ -357,7 +382,231 @@ app.post('/api/add_food_item', restrict_restaurant, async (req, res) => {
     }
 });
 
+app.get('/api/get_food_item', async (req, res) => {
+    let { food_item_id } = req.body;
 
+    try {
+        let food_item_result = await pool.query(
+            `SELECT food_item_id, restaurant_id, food_name, price, veg, serving, food_image_url FROM food_items
+             WHERE food_item_id=$1`,
+            [food_item_id]
+        );
+
+        let restaurant_result = await pool.query(
+            `SELECT restaurant_id, name, address, restaurant_image_url, 
+             ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name)) tags 
+             FROM restaurant NATURAL JOIN restaurant_tags
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id, name, address, restaurant_image_url`,
+            [food_item_result.rows[0].restaurant_id]
+        );
+
+        let rating_result = await pool.query(
+            `SELECT AVG(rating) AS rating, COUNT(rating_food_id) AS num_reviews FROM rating_foods 
+             WHERE food_item_id=$1`,
+            [food_item_id]
+        );
+
+        let order_result = await pool.query(
+            `SELECT SUM(quantity) as num_buys FROM orders WHERE food_item_id=$1`,
+            [food_item_id]
+        );
+
+        res.json({
+            ...food_item_result.rows[0],
+            restaurant: {
+                ...restaurant_result.rows[0]
+            },
+            ...rating_result.rows[0],
+            ...order_result.rows[0],
+        });
+    } catch(e) {
+        res.json({});
+    }
+});
+
+app.get('/api/restaurant', async (req, res) => {
+    let { restaurant_id } = req.body;
+
+    try {
+        let restaurant_result = await pool.query(
+            `SELECT restaurant_id, name, address, restaurant_image_url, 
+             ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name)) tags 
+             FROM restaurant NATURAL JOIN restaurant_tags
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id, name, address, restaurant_image_url`,
+            [restaurant_id]
+        );
+
+        let review_result = await pool.query(
+            `SELECT AVG(rating) AS rating, 
+             ARRAY_AGG(JSON_BUILD_OBJECT(
+                'name', customers.name, 
+                'rating', rating, 
+                'review', review)) reviews
+             FROM review_restaurants NATURAL JOIN customers
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id`,
+            [restaurant_id]
+        );
+
+        let food_item_result = await pool.query(
+            `SELECT ARRAY_AGG(JSON_BUILD_OBJECT(
+                'food_item_id', food_item_id, 
+                'food_name', food_name, 
+                'price', price, 
+                'veg', veg, 
+                'serving', serving, 
+                'food_image_url', food_image_url)) food_items
+             FROM food_items
+             WHERE restaurant_id=$1
+             GROUP BY restaurant_id`,
+            [restaurant_id]
+        );
+
+        res.json({
+            ...restaurant_result.rows[0],
+            ...review_result.rows[0],
+            ...food_item_result.rows[0],
+        });
+    } catch(e) {
+        res.json({});
+    }
+});
+
+app.post('/api/restaurant_orders', restrict_restaurant, async (req, res) => {
+    let result = await pool.query(
+        `SELECT ARRAY_AGG(JSON_BUILD_OBJECT(
+            'order_id', order_id,
+            'customer', JSON_BUILD_OBJECT(
+                'customer_id', customer_id,
+                'name', name),
+            'food_item', JSON_BUILD_OBJECT(
+                'food_item_id', food_item_id,
+                'food_name', food_name,
+                'price', price,
+                'veg', veg,
+                'serving', serving,
+                'food_image_url', food_image_url),
+            'quantity', quantity,
+            'timestamp', timestamp,
+            'delivery_location', delivery_location)) orders 
+         FROM orders NATURAL JOIN customers NATURAL JOIN food_items
+         WHERE restaurant_id=$1 AND completed=$2
+         GROUP BY restaurant_id`,
+        [req.session.restaurant_id, req.body.completed]
+    );
+
+    res.json(result.rows[0]);
+});
+
+app.post('/api/restaurant_order_complete', restrict_restaurant, async (req, res) => {
+    try{
+        await pool.query(
+            `UPDATE orders SET
+                completed = TRUE
+             WHERE order_id=$2 AND restaurant_id=$1`,
+            [req.session.restaurant_id, req.body.order_id]
+        );
+
+        res.json({ done: true });
+    } catch(e){
+        res.json({ done: false });
+    }
+});
+
+app.post('/api/tags', async (_, res) => {
+    let tags_result = await pool.query(`SELECT tag_id, tag_name FROM tag`);
+
+    res.json({ tags: tags_result.rows });
+});
+
+app.post('api/add_tag', async (req, res) => {
+    try {
+        let tag_result = pool.query(
+            `INSERT INTO tag(tag_name) VALUES($1) RETURNING tag_id`,
+            [req.body.name]
+        );
+
+        res.json({
+            tag_id: tag_result.rows[0].tag_id,
+            done: true,
+        });
+    } catch(e){
+        res.json({ done: false });
+    }
+});
+
+app.post('/api/upload_restaurant_image', restrict_restaurant, upload.single('image'), async (req, res) => {
+    await pool.query(
+        `UPDATE restaurants SET
+            restaurant_image_url = $2
+         WHERE restaurant_id=$1`,
+        [req.session.restaurant_id, `/uploads/${req.file.filename}`]
+    );
+
+    res.end();
+});
+
+app.post('/api/upload_food_image', restrict_restaurant, upload.single('image'), async (req, res) => {
+    await pool.query(
+        `UPDATE food_items SET
+            food_image_url = $3
+         WHERE food_item_id=$2 AND restaurant_id=$1`,
+        [req.session.restaurant_id, req.body.id, `/uploads/${req.file.filename}`]
+    );
+
+    res.end();
+});
+
+app.post('/api/place_order', restrict_customer, async (req, res) => {
+    try{
+        await pool.query(
+            `WITH deleted AS (DELETE FROM cart WHERE customer_id=$1 
+                              RETURNING food_item_id, customer_id, quantity)
+             INSERT INTO orders(food_item_id, customer_id, quantity, timestamp, delivery_location, completed)
+             SELECT food_item_id, customer_id, quantity, 
+                    $2 AS timestamp, $3 AS delivery_location, FALSE as completed`,
+            [req.session.customer_id, new Date(), req.body.delivery_location]
+        ); 
+
+        res.json({ done: true });
+    } catch(e){
+        res.json({ done: false });
+    }
+});
+
+app.post('/api/add_rating', restrict_customer, async (req, res) => {
+    let { food_item_id, rating } = req.body;
+
+    try {
+        await pool.query(
+            `INSERT INTO rating_foods(customer_id, rating, food_item_id) 
+             VALUES($1, $2, $3)`,
+            [req.session.customer_id, rating, food_item_id]
+        );
+
+        res.json({ done: true });
+    } catch(e){
+        res.json({ done: false });
+    }
+});
+
+app.post('/api/add_review', restrict_customer, async (req, res) => {
+    let { restaurant_id, rating, review } = req.body;
+
+    try {
+        await pool.query(
+            `INSERT INTO review_restaurants(customer_id, rating, review, restaurant_id) 
+             VALUES($1, $2, $3, $4)`,
+            [req.session.customer_id, rating, review, restaurant_id]
+        );
+
+        res.json({ done: true });
+    } catch(e){
+        res.json({ done: false });
+    }
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);

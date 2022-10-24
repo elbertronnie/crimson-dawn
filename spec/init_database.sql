@@ -54,4 +54,5 @@ food_item_id int not null references food_items(food_item_id),
 customer_id int not null references customers(customer_id),
 quantity int not null,
 timestamp timestamp not null,
+delivery_location varchar(254) not null,
 completed boolean not null);

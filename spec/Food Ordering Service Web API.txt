@@ -1,6 +1,6 @@
-Food Ordering Service Web API v0.1
+Food Ordering Service Web API
 
-
+/api/get_id
 /api/customer_details
 /api/edit_customer
 /api/add_food_item_cart
@@ -10,19 +10,29 @@ Food Ordering Service Web API v0.1
 /api/edit_restaurant
 /api/edit_food_item
 /api/add_food_item
-
 /api/delete_food_item
-/api/upload_food_image
-/api/search_location
-/api/search_restaurants
-/api/search_food_items
 /api/food_item
 /api/restaurant
 /api/restaurant_orders
 /api/restaurant_order_complete
 /api/tags
 /api/add_tag
+/api/upload_restaurant_image
+/api/upload_food_image
+/api/place_order
+/api/add_rating
+/api/add_review
 
+/api/customer_orders
+/api/search_restaurants
+/api/search_food_items
+
+
+GET /api/get_id
+response: {
+    customer_id,
+    restaurant_id,
+}
 
 GET /api/customer_details
 requires authentication as customer
@@ -136,6 +146,11 @@ response: {
     done,
 }
 
+POST /api/upload_restaurant_image
+requires authentication as restaurant
+Form submission(input type=file)
+image=
+
 POST /api/upload_food_image
 requires authentication as restaurant
 Form submission(input type=file)
@@ -181,7 +196,10 @@ response: [{
     name,
     address,
     restaurant_image_url,
-    tags: [],
+    tags: [{
+        tag_id,
+        tag_name,
+    }],
 }]
 
 GET /api/search_food_items
@@ -190,11 +208,19 @@ request: {
 }
 response: [{
     food_item_id,
-    restaurant: {same as result of /search_restaurant},
+    restaurant: {
+        restaurant_id,
+        name,
+        address,
+        restaurant_image_url,
+        tags: [{
+            tag_id,
+            tag_name,
+        }], 
+    },
     food_name,
     price,
     veg,
-    metadata, // may not be required
     food_image_url,
     rating,
     num_reviews,
@@ -207,13 +233,23 @@ request: {
 }
 response:{
     food_item_id,
-    restaurant: {same as result of /search_restaurant},
+    restaurant: {
+        restaurant_id,
+        name,
+        address,
+        restaurant_image_url,
+        tags: [{
+            tag_id,
+            tag_name,
+        }],
+    },
     food_name,
     price,
     veg,
-    metadata, // may not be required
     food_image_url,
     rating,
+    num_reviews,
+    num_buys,
 }
 
 GET /api/restaurant
@@ -225,7 +261,10 @@ response: {
     name,
     address,
     restaurant_image_url,
-    tags: [],
+    tags: [{
+        tag_id,
+        tag_name,
+    }],
     rating,
     reviews: [{
         name,
@@ -244,24 +283,29 @@ response: {
 
 POST /api/restaurant_orders
 requires authentication as restaurant
-response: [{
-    order_id,
-    customer: {
-        customer_id,
-        name,
-        address,
-    },
-    timestamp,
+request: {
+    completed,
+}
+response: {
     orders: [{
-        food_item_id,
-        food_name,
-        price,
-        veg,
-        serving,
-        food_image_url,
+        order_id,
+        customer: {
+            customer_id,
+            name,
+        },
+        food_item: {
+            food_item_id,
+            food_name,
+            price,
+            veg,
+            serving,
+            food_image_url,
+        },
         quantity,
+        timestamp,
+        delivery_location,
     }]
-}]
+}
 
 POST /api/restaurant_order_complete
 requires authentication as restaurant
@@ -273,9 +317,8 @@ response: {
 }
 
 GET /api/tags
-request: {}
 response: {
-    result: [{
+    tags: [{
         tag_id,
         tag_name,
     }]
@@ -289,4 +332,61 @@ request: {
 response: {
     tag_id,
     done,
+}
+
+POST /api/place_order
+requires authentication as customer
+request: {
+    delivery_location,
+}
+response: {
+    done,
+}
+
+POST /api/add_rating
+requires authentication as customer
+request: {
+    food_item_id,
+    rating,
+}
+response: {
+    done,
+}
+
+POST /api/add_review
+requires authentication as customer
+request: {
+    restaurant_id,
+    rating,
+    review,
+}
+response: {
+    done,
+}
+
+POST /api/customer_orders
+requires authentication as customer
+request: {
+    completed,
+}
+response: {
+    orders: [{
+        order_id,
+        food_item: {
+            food_item_id,
+            restaurant: {
+                restaurant_id,
+                name,
+                address,
+                restaurant_image_url,
+            },
+            food_name,
+            price,
+            veg,
+            serving,
+            food_image_url,
+        },
+        quantity,
+        timestamp,
+    }]
 }
