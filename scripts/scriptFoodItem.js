@@ -1,4 +1,4 @@
-document.onload = ()=>{
+window.onload = ()=>{
     let edit = document.getElementById('edit');
     let save = document.getElementById('save');
     if(document.location.href === 'http://127.0.0.1:3000/Restaurant/foodItem.html'){
@@ -51,7 +51,7 @@ document.onload = ()=>{
         let food_item_id = Number((new URL(document.location)).searchParams.get('food_item_id'));
 
         fetch('/api/food_item', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': food_item_id})})
-        .then(res => console.log(res.json()))
+        .then(res => res.json())
         .then(data => {
             console.log(data);
 
