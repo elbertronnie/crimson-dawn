@@ -591,7 +591,7 @@ app.post('/api/tags', async (_, res) => {
     res.json({ tags: tags_result.rows });
 });
 
-app.post('api/add_tag', async (req, res) => {
+app.post('/api/add_tag', async (req, res) => {
     try {
         let tag_result = pool.query(
             `INSERT INTO tag(tag_name) VALUES($1) RETURNING tag_id`,
@@ -603,6 +603,7 @@ app.post('api/add_tag', async (req, res) => {
             done: true,
         });
     } catch(e){
+        console.log(e);
         res.json({ done: false });
     }
 });

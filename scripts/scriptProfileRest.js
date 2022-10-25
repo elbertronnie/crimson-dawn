@@ -65,8 +65,7 @@ window.onload = ()=>{
             document.querySelectorAll('.del').forEach(ele => {
                 console.log(ele);
                 ele.addEventListener('click', (event)=>{
-                    console.log('clicked del');
-                    fetch('/api/delete_food_item', {method: 'DELETE', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': Number(event.target.name)})})
+                fetch('/api/delete_food_item', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': Number(event.target.name)})})
                     .then(res => console.log(res.json()))
                     .catch(err => console.log(err))
                 })

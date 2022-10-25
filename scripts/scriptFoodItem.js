@@ -1,5 +1,4 @@
 window.onload = ()=>{
-    
     console.log(document.location.href);
     if(document.location.href.includes('?')){
         console.log("It's edit");
