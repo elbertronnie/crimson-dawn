@@ -5,15 +5,17 @@ customElements.define('custom-navbar',
         }
         
         login(){
-            return `<div class="login">Login</div>`;
+            return `<div class="login"><a href="/auth/login.html">Login</a></div>`;
         }
         
         user(){
             return `<div class="user">
-                        <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22.6666 25V22.3333C22.6666 20.9188 22.1047 19.5623 21.1045 18.5621C20.1044 17.5619 18.7478 17 17.3333 17H6.66665C5.25216 17 3.8956 17.5619 2.89541 18.5621C1.89522 19.5623 1.33331 20.9188 1.33331 22.3333V25" stroke="#6B4EFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 11.6667C14.9455 11.6667 17.3333 9.27885 17.3333 6.33333C17.3333 3.38781 14.9455 1 12 1C9.05446 1 6.66665 3.38781 6.66665 6.33333C6.66665 9.27885 9.05446 11.6667 12 11.6667Z" stroke="#6B4EFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <a href="/user/profile.html">
+                            <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.6666 25V22.3333C22.6666 20.9188 22.1047 19.5623 21.1045 18.5621C20.1044 17.5619 18.7478 17 17.3333 17H6.66665C5.25216 17 3.8956 17.5619 2.89541 18.5621C1.89522 19.5623 1.33331 20.9188 1.33331 22.3333V25" stroke="#6B4EFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 11.6667C14.9455 11.6667 17.3333 9.27885 17.3333 6.33333C17.3333 3.38781 14.9455 1 12 1C9.05446 1 6.66665 3.38781 6.66665 6.33333C6.66665 9.27885 9.05446 11.6667 12 11.6667Z" stroke="#6B4EFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                     </div>`;
         }
 

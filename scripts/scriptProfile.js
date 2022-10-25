@@ -45,9 +45,9 @@ window.onload = function(){
         })
     })
 
-    document.getElementById('logout').addEventListener('click', ()=>{
+    document.getElementById('logout').addEventListener('click', async ()=>{
         fetch('/logout', {method: 'POST'})
-        .then(res => console.log(res.json()))
-        .catch(err => console.log(err))
+        .then(() => window.location.href = "/")
+        .catch((e) => console.log(e))
     })
 }

@@ -9,7 +9,7 @@ window.onload = ()=>{
     let charge=0;
     let cards = '';
     
-    fetch('api/customer_details').then((res)=>{
+    fetch('/api/customer_details').then((res)=>{
         return res.json();
     })
     .then((data)=>{

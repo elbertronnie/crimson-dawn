@@ -408,8 +408,9 @@ app.post('/api/food_item', async (req, res) => {
 
         let restaurant_result = await pool.query(
             `SELECT restaurant_id, name, address, restaurant_image_url, 
-             ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name)) tags 
-             FROM restaurant NATURAL JOIN restaurant_tags
+             COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
+                      FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags  
+             FROM restaurants NATURAL LEFT OUTER JOIN restaurant_tags NATURAL LEFT OUTER JOIN tag
              WHERE restaurant_id=$1
              GROUP BY restaurant_id, name, address, restaurant_image_url`,
             [food_item_result.rows[0].restaurant_id]
@@ -435,6 +436,7 @@ app.post('/api/food_item', async (req, res) => {
             ...order_result.rows[0],
         });
     } catch(e) {
+        console.log(e);
         res.json({});
     }
 });
@@ -495,8 +497,8 @@ app.post('/api/restaurant_card', async (req, res) => {
     try {
         let restaurant_result = await pool.query(
             `SELECT restaurant_id, name, address, restaurant_image_url, 
-            COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
-              FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
+             COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT('tag_id', tag_id, 'tag_name', tag_name))
+                      FILTER (WHERE tag_id IS NOT NULL), '{}') AS tags 
              FROM restaurants NATURAL LEFT OUTER JOIN restaurant_tags NATURAL LEFT OUTER JOIN tag
              WHERE restaurant_id=$1
              GROUP BY restaurant_id, name, address, restaurant_image_url`,

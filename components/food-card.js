@@ -303,11 +303,11 @@ customElements.define('food-card',
             } else if(name === "rating" && oldValue !== newValue){
                 const rating = this.shadowRoot.getElementById('rating');
                 rating.rating = newValue;
-                rating.style.visibility = newValue == null ? 'hidden' : 'visible';
+                rating.style.visibility = newValue ? 'hidden' : 'visible';
             } else if(name === "review" && oldValue !== newValue){
                 const review = this.shadowRoot.getElementById('review');
                 review.review = newValue;
-                review.style.visibility = newValue == null ? 'hidden' : 'visible';
+                review.style.visibility = newValue ? 'hidden' : 'visible';
             } else if(name === "serving" && oldValue !== newValue){
                 this.shadowRoot.getElementById('serving').serving = newValue;
             } else if(name === "type" && oldValue !== newValue){

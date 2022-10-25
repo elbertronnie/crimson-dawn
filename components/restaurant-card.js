@@ -241,11 +241,17 @@ customElements.define('restaurant-card',
             } else if(name === "title" && oldValue !== newValue){
                 this.shadowRoot.getElementById('title').textContent = newValue;
             } else if(name === "rating" && oldValue !== newValue){
-                this.shadowRoot.getElementById('rating').rating = newValue;
+                const rating = this.shadowRoot.getElementById('rating');
+                rating.rating = newValue;
+                rating.style.visibility = newValue ? 'hidden' : 'visible';
             } else if(name === "review" && oldValue !== newValue){
-                this.shadowRoot.getElementById('review').review = newValue;
+                const review = this.shadowRoot.getElementById('review');
+                review.review = newValue;
+                review.style.visibility = newValue ? 'hidden' : 'visible';
             } else if(name === "buys" && oldValue !== newValue){
-                this.shadowRoot.getElementById('buys').buys = newValue;
+                const buys = this.shadowRoot.getElementById('buys');
+                buys.buys = newValue;
+                buys.style.visibility = newValue ? 'hidden' : 'visible';
             } else if(name === "type" && oldValue !== newValue){
                 this.shadowRoot.getElementById('type').type = newValue;
             } else if(name === "address" && oldValue !== newValue){
