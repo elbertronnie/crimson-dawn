@@ -711,7 +711,7 @@ app.post('/api/search_restaurants', restrict_customer, async (req, res) => {
     let result = await pool.query(
         `SELECT restaurant_id 
          FROM ((SELECT DISTINCT restaurant_id FROM restaurant_tags NATURAL JOIN tag WHERE tag_name LIKE $1) UNION
-               (SELECT restaurant_id FROM restaurants WHERE name LIKE $1 OR address LIKE $1))
+               (SELECT restaurant_id FROM restaurants WHERE name LIKE $1 OR address LIKE $1)) AS restaurant_ids
               NATURAL JOIN restaurants
          WHERE address LIKE $2`,
         [text_pattern, address_pattern]
