@@ -710,10 +710,10 @@ app.post('/api/search_restaurants', restrict_customer, async (req, res) => {
     let text_pattern = `%${req.body.text}%`;
     let result = await pool.query(
         `SELECT restaurant_id 
-         FROM ((SELECT DISTINCT restaurant_id FROM restaurant_tags NATURAL JOIN tag WHERE tag_name LIKE $1) UNION
-               (SELECT restaurant_id FROM restaurants WHERE name LIKE $1 OR address LIKE $1)) AS restaurant_ids
+         FROM ((SELECT DISTINCT restaurant_id FROM restaurant_tags NATURAL JOIN tag WHERE tag_name ILIKE $1) UNION
+               (SELECT restaurant_id FROM restaurants WHERE name ILIKE $1 OR address ILIKE $1)) AS restaurant_ids
               NATURAL JOIN restaurants
-         WHERE address LIKE $2`,
+         WHERE address ILIKE $2`,
         [text_pattern, address_pattern]
     );
 
@@ -730,7 +730,7 @@ app.post('/api/search_food_items', restrict_customer, async (req, res) => {
     let text_pattern = `%${req.body.text}%`;
     let result = await pool.query(
         `SELECT food_item_id FROM food_items NATURAL JOIN restaurants 
-         WHERE food_name LIKE $1 AND address LIKE $2`,
+         WHERE food_name ILIKE $1 AND address ILIKE $2`,
         [text_pattern, address_pattern]
     );
 
