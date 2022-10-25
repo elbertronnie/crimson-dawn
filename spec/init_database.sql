@@ -49,10 +49,15 @@ review varchar(1000),
 restaurant_id int not null references restaurants(restaurant_id));
 
 create table orders(
-order_id int primary key,
+order_id serial primary key,
 food_item_id int not null references food_items(food_item_id),
 customer_id int not null references customers(customer_id),
 quantity int not null,
 timestamp timestamp not null,
 delivery_location varchar(254) not null,
 completed boolean not null);
+
+create table images(
+image_id serial primary key,
+buffer text not null,
+mimetype text not null);

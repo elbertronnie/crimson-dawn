@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config();
 
 import express from 'express';
 import session from 'express-session';
@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import pg from 'pg';
 import multer from 'multer';
 
-const upload = multer({ dest: 'uploads/' })
+const upload = multer();
 
 // Connection details are specified through the .env file
 const pool = new pg.Pool({
@@ -142,9 +142,22 @@ app.post('/restaurant/login', async (req, res) => {
 
 
 app.post('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/login.html');
-  });
+    req.session.destroy(() => {
+        res.redirect('/login.html');
+    });
+});
+
+
+app.get('/images/:id', async (req, res) => {
+    let result = await pool.query(`SELECT buffer, mimetype from image_files WHERE image_id=$1`,[req.params.id]);
+    let { buffer, mimetype } = result.rows[0];
+    let img = Buffer.from(buffer, 'base64');
+
+    res.writeHead(200, {
+        'Content-Type': mimetype,
+        'Content-Length': img.length,
+    });
+    res.end(img);
 });
 
 
@@ -577,22 +590,32 @@ app.post('api/add_tag', async (req, res) => {
 });
 
 app.post('/api/upload_restaurant_image', restrict_restaurant, upload.single('image'), async (req, res) => {
+    let result = await pool.query(
+        `INSERT INTO images(buffer, mimetype) VALUES($1, $2) RETURNING image_id`,
+        [req.file.buffer.toString('base64'), req.file.mimetype]
+    );
+
     await pool.query(
         `UPDATE restaurants SET
             restaurant_image_url = $2
          WHERE restaurant_id=$1`,
-        [req.session.restaurant_id, `/uploads/${req.file.filename}`]
+        [req.session.restaurant_id, `/images/${result.rows[0].image_id}`]
     );
 
     res.end();
 });
 
 app.post('/api/upload_food_image', restrict_restaurant, upload.single('image'), async (req, res) => {
+    let result = await pool.query(
+        `INSERT INTO images(buffer, mimetype) VALUES($1, $2) RETURNING image_id`,
+        [req.file.buffer.toString('base64'), req.file.mimetype]
+    );
+
     await pool.query(
         `UPDATE food_items SET
             food_image_url = $3
          WHERE food_item_id=$2 AND restaurant_id=$1`,
-        [req.session.restaurant_id, req.body.id, `/uploads/${req.file.filename}`]
+        [req.session.restaurant_id, req.body.id, `/images/${result.rows[0].image_id}`]
     );
 
     res.end();
@@ -673,6 +696,43 @@ app.post('/api/customer_orders', restrict_customer, async (req, res) => {
     );
 
     res.json(result.rows[0]);
+});
+
+app.post('/api/search_restaurants', restrict_customer, async (req, res) => {
+    let customer_result = await pool.query(
+        `SELECT address FROM customers WHERE customer_id=$1`, 
+        [req.session.customer_id]
+    );
+
+    let address_pattern = `%${customer_result.rows[0].address}%`;
+    let text_pattern = `%${req.body.text}%`;
+    let result = await pool.query(
+        `SELECT restaurant_id 
+         FROM ((SELECT DISTINCT restaurant_id FROM restaurant_tags NATURAL JOIN tag WHERE tag_name LIKE $1) UNION
+               (SELECT restaurant_id FROM restaurants WHERE name LIKE $1 OR address LIKE $1))
+              NATURAL JOIN restaurants
+         WHERE address LIKE $2`,
+        [text_pattern, address_pattern]
+    );
+
+    res.json({ restaurants: result.rows });
+});
+
+app.post('/api/search_food_items', restrict_customer, async (req, res) => {
+    let customer_result = await pool.query(
+        `SELECT address FROM customers WHERE customer_id=$1`, 
+        [req.session.customer_id]
+    );
+
+    let address_pattern = `%${customer_result.rows[0].address}%`;
+    let text_pattern = `%${req.body.text}%`;
+    let result = await pool.query(
+        `SELECT food_item_id FROM food_items NATURAL JOIN restaurants 
+         WHERE food_name LIKE $1 AND address LIKE $2`,
+        [text_pattern, address_pattern]
+    );
+
+    res.json({ food_items: result.rows });
 });
 
 app.listen(process.env.PORT, () => {

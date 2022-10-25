@@ -192,41 +192,21 @@ GET /api/search_restaurants
 request: {
     text:
 }
-response: [{
-    restaurant_id,
-    name,
-    address,
-    restaurant_image_url,
-    tags: [{
-        tag_id,
-        tag_name,
-    }],
-}]
+response: {
+    restaurants: [{
+        restaurant_id,
+    }]
+}
 
 GET /api/search_food_items
 request: {
     text: 
 }
-response: [{
-    food_item_id,
-    restaurant: {
-        restaurant_id,
-        name,
-        address,
-        restaurant_image_url,
-        tags: [{
-            tag_id,
-            tag_name,
-        }], 
-    },
-    food_name,
-    price,
-    veg,
-    food_image_url,
-    rating,
-    num_reviews,
-    num_buys,
-}]
+response: {
+    food_items: [{
+        food_item_id,
+    }]
+}
 
 GET /api/food_item
 request: {
