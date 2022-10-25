@@ -168,18 +168,14 @@ body{
     align-items: flex-start;
     padding: 0px;
     gap: 8px;
-
     min-height: 80px;
-
     flex: none;
     order: 2;
     align-self: stretch;
     flex-grow: 0;
-
     font-family: 'Inter';
     font-style: normal;
-    font-size: 48px;
-    line-height: 54px;
+    min-height: 160px;
 }
 
 .unit{
@@ -225,11 +221,10 @@ body{
     align-items: flex-end;
     padding: 0px;
     gap: 8px;
-    
     height: 32px;
-
     flex: none;
     order: 0;
+    font-size: 24px;
     flex-grow: 1;
 }
 

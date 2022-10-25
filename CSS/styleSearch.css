@@ -150,6 +150,7 @@
     font-style: normal;
     font-size: 48px;
     line-height: 54px;
+    min-height: 160px;
 }
 
 .item {
@@ -207,6 +208,7 @@
     flex-grow: 0;
     align-items: center;
     align-content: center;
+    min-height: 160px;
 }
 
 food-card{

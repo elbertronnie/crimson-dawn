@@ -272,6 +272,8 @@ body{
     flex: none;
     order: 2;
     flex-grow: 0;
+
+    min-height: 160px;
 }
 
 #food-cards{

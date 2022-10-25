@@ -4,7 +4,7 @@ window.onload = ()=>{
     .then((data)=>{
         console.log(data);
         if(data.restaurants.length == 0){
-            document.getElementById('content').innerHTML = `<p style="width: 100%; text-align: center;">There are no searches.😕</p>`;
+            document.getElementById('content').innerHTML = `<p style="width: 100%; text-align: center; opacity: 50%;">There are no searches.😕</p>`;
         }
         else{    
             let cards = '';
@@ -23,7 +23,7 @@ window.onload = ()=>{
     .then((data)=>{
         console.log(data);
         if(data.food_items.length == 0){
-            document.getElementById('frame3').innerHTML += `<p style="width: 100%; text-align: center;">There are no searches.😕</p>`;
+            document.getElementById('frame3').innerHTML += `<p style="width: 100%; text-align: center; opacity: 50%;">There are no searches.😕</p>`;
         }
         else{    
             let cards = '';
@@ -45,7 +45,7 @@ window.onload = ()=>{
         .then((data)=>{
             console.log(data);
             if(data.restaurants.length == 0){
-                document.getElementById('content').innerHTML = `<p style="width: 100%; text-align: center;">There are no searches.😕</p>`;
+                document.getElementById('content').innerHTML = `<p style="width: 100%; text-align: center; opacity: 50%;">There are no searches.😕</p>`;
             }
             else{    
                 let cards = '';
@@ -64,11 +64,11 @@ window.onload = ()=>{
         .then((data)=>{
             console.log(data);
             if(data.food_items.length == 0){
-                document.getElementById('frame3').innerHTML += `<p style="width: 100%; text-align: center;">There are no searches.😕</p>`;
+                document.getElementById('cards').innerHTML = `<p style="width: 100%; text-align: center; opacity: 50%;">There are no searches.😕</p>`;
             }
             else{    
                 let cards = '';
-                data.food_item_id.forEach(item => {
+                data.food_items.forEach(item => {
                     let card = `<food-card food-item-id="${item.food_item_id}" edit></food-card>`;
                     cards += card;
                 });

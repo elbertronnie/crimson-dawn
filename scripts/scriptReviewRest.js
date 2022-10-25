@@ -7,9 +7,10 @@ window.onload = function(){
         return res.json();
     })
     .then((data)=>{
+        console.log(data);
         document.getElementById('rest-name').innerHTML = data.name;
         document.getElementById('rest-address').innerHTML = data.address;
-        document.getElementById('rest-rating').innerHTML = data.rating;
+        document.getElementById('rest-rating').rating = Number(data.rating);
         document.getElementById('rest-img').style.backgroundImage.url = data.restaurant_image_url;
         data.tags.forEach((tag) => {
             document.getElementById('rest-tags').innerHTML += tag.tag_name;
