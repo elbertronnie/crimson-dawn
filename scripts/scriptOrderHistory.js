@@ -1,22 +1,24 @@
 window.onload = ()=>{
 
-    fetch('/api/customer_orders', {method: 'POST'})
+    fetch('/api/customer_orders', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ completed: false })
+    })
     .then(res => {return res.json();})
     .then(data => {
-        console.log(orders);
         let orders = '';
         data.orders.forEach(ele => {
-            let type = (ele.food_item.veg == true) ? "veg" : "non-veg";
             let order = 
             `<div class="order ${ele.order_id}">
                 <div class="date">
-                    <div class="text">${ele.timestamp}</div>
+                    <div class="text">${new Date(ele.timestamp).toDateString()}</div>
                 </div>
                 <div class="food">
                     <div class="restName">
                         ${ele.food_item.restaurant.name}
                     </div>
-                    <a href="./ratingFood.html?food_item_id=${ele.food_item.food_item_id}"><food-card food-item-id="${ele.food_item.food_item_id}"></food-card></a>
+                    <a style="text-decoration: none;" href="./ratingFood.html?food_item_id=${ele.food_item.food_item_id}"><food-card food-item-id="${ele.food_item.food_item_id}" count="${ele.quantity}"></food-card></a>
                 </div>
             </div>`
             orders += order;
@@ -30,7 +32,7 @@ window.onload = ()=>{
 
     document.getElementById('logout').addEventListener('click', ()=>{
         fetch('/logout', {method: 'POST'})
-        .then(res => console.log(res.json()))
+        .then(() => window.location.href = "/")
         .catch(err => console.log(err))
     });
 }

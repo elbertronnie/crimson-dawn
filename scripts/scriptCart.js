@@ -21,7 +21,7 @@ window.onload = ()=>{
             let type = (item.veg == true) ? "veg" : "non-veg";
             let card = `<div class="item">
                             <div class="food">
-                            <food-card food-item-id="${item.food_item_id}" edit></food-card>
+                            <food-card food-item-id="${item.food_item_id}" edit count="${item.quantity}"></food-card>
                         </div>
                         <div class="cost">₹${item.price * item.quantity}</div>
                     </div>`;
@@ -34,8 +34,9 @@ window.onload = ()=>{
 
     proceed.addEventListener('click',(event)=>{
         let address = document.getElementById('address').value;
-        fetch('/api/place_order', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'delivery-location': address})})
+        fetch('/api/place_order', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'delivery_location': address})})
         .then(res => console.log(res.json()))
+        .then(() => window.location.href = "./orderHistory.html")
         .catch(err => console.log(err))
     })
 

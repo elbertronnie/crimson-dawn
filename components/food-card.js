@@ -16,7 +16,7 @@ customElements.define('food-card',
 
         font-size: 0;
         line-height: 0;
-
+        
         /* Auto layout */
 
         display: flex;
@@ -24,8 +24,8 @@ customElements.define('food-card',
         align-items: center;
         padding: 0px;
 
-        width: 100%;
-        /*height: 120px;*/
+        width: 452px;
+        height: 120px;
 
         /* Sky/Lighter */
 
@@ -223,7 +223,7 @@ customElements.define('food-card',
                 <div class="food-card-food-name" id="title">${this.title}</div>
                 <food-type-icon type="${this.type}" id="type"></food-type-icon>
             </div>
-            <div class="food-card-price" id="price">${this.price}</div>
+            <div class="food-card-price" id="price">&#8377;${this.price}</div>
         </div>
         <div class="food-card-bottom-row">
             <rating-pill rating="${this.rating}" id="rating"></rating-pill>
@@ -263,19 +263,19 @@ customElements.define('food-card',
             setTimeout(async () => {
                 const count = shadowRoot.getElementById("count");
                 count.addEventListener('increment', async () => {
-                    const url = this.count ? '/api/edit_food_item_cart' : '/api/add_food_item_cart';
+                    const url = Number(this.count)==0 ? '/api/add_food_item_cart' : '/api/edit_food_item_cart';
                     const data = await (await fetch(url, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({
                             food_item_id: this.food_item_id,
-                            quantity: this.count+1,
+                            quantity: Number(this.count)+1,
                         }),
                     })).json();
                     if(data.done) this.count++;
                 });
                 count.addEventListener('decrement', async () => {
-                    const url = this.count-1 ? '/api/edit_food_item_cart' : '/api/delete_food_item_cart';
+                    const url = Number(this.count)==1 ? '/api/delete_food_item_cart' : '/api/edit_food_item_cart';
                     const data = await (await fetch(url, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
@@ -301,7 +301,7 @@ customElements.define('food-card',
             } else if(name === "title" && oldValue !== newValue){
                 this.shadowRoot.getElementById('title').textContent = newValue;
             } else if(name === "price" && oldValue !== newValue){
-                this.shadowRoot.getElementById('price').textContent = newValue;
+                this.shadowRoot.getElementById('price').textContent = '₹'+newValue;
             } else if(name === "rating" && oldValue !== newValue){
                 const rating = this.shadowRoot.getElementById('rating');
                 rating.rating = newValue;

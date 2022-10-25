@@ -5,7 +5,7 @@ customElements.define('food-button',
         }
         
         zero(){
-            return `<div class="button" id="add">Add</div>`;
+            return `<div class="button" id="add">${this.edit == '' ? 'Add' : '0'}</div>`;
         }
         
         more(){
@@ -55,6 +55,8 @@ customElements.define('food-button',
     .button{
         /* Add */
 
+        cursor: pointer;
+
         /* Regular/Normal/Medium */
 
         font-family: 'Inter';
@@ -80,7 +82,8 @@ customElements.define('food-button',
     .plus-circle{
         /* plus-circle */
 
-        visibility: ${this.edit ? 'visible' : 'hidden'};
+        visibility: ${this.edit == '' ? 'visible' : 'hidden'};
+        cursor: pointer;
 
         width: 16px;
         height: 16px;
@@ -125,7 +128,8 @@ customElements.define('food-button',
     .minus-circle{
         /* minus-circle */
         
-        visibility: ${this.edit ? 'visible' : 'hidden'};
+        visibility: ${this.edit == '' ? 'visible' : 'hidden'};
+        cursor: pointer;
 
         width: 16px;
         height: 16px;
