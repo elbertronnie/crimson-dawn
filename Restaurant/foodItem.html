@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="../CSS/styleFoodItem.css">
+    <script src="../scripts/scriptFoodItem.js"></script>
     <script src="../components/custom-footer.js"></script>
 </head>
 <body>
@@ -19,7 +20,7 @@
             <div class="f1-1">
                 <div id="dish-img"></div>
             </div>
-            <form id="img-form" action="/api/upload_restaurant_image" method="POST">    
+            <form id="img-form" action="/api/upload_food_image" method="POST">    
                 <div class="alter-img">
                     <input type="file" name="image" id="upload-img">
                     <button type="submit" id="submit-img"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +54,7 @@
         <div class="frame3">
             <div class="button1">
                 <button id="edit">Edit</button>
-                <button id="save">Save</button>
+                <button id="save" disabled>Save</button>
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="../CSS/styleProfileRest.css">
+    <script src="../scripts/scriptProfileRest.js"></script>
     <script src="../components/custom-footer.js"></script>
     <script src="../components/food-card.js"></script>
     <script src="../components/food-button.js"></script>
@@ -24,11 +25,11 @@
             <div class="img">
                 <div class="rest-details">
                     <div class="name-rate">
-                        <div id="rest-name">Baskins</div>
+                        <div id="rest-name"></div>
                         <rating-pill id="rest-rating"></rating-pill>
                     </div>
-                    <div id="rest-tags">chinese, indian</div>
-                    <div id="rest-address">Gwalior</div>
+                    <div id="rest-tags"></div>
+                    <div id="rest-address"></div>
                 </div>
                 <div class="f11-2">
                     <div id="rest-img"></div>
@@ -60,56 +61,23 @@
             <div class="tags">
                 <div class="text2">Select options which best describe your Restaurant</div>
                 <div id="add-tag">
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
-                    <div class="checkbox">
-                        <input type="radio" name="North Indian">
-                        <div class="tag">North Indian</div>
-                    </div>
                 </div>
                 <div class="other-tags">
-                    <input type="text" id="more-tags">
+                    <input type="text" id="more-tags" disabled>
                     <button id="add-more-tag">+</button>
                 </div>
             </div>
             <div class="button1">
                 <button id="edit1">Edit</button>
-                <button id="save1">Save</button>
+                <button id="save1" disabled>Save</button>
             </div>
         </div>
         <div class="frame2">
             <div class="text3">Food Items</div>
             <div id="food-cards">
-                <div class="food-card">
-                    <food-card food-item-id="1"></food-card>
-                    <button class="del">X</button>
-                </div>
-                <div class="food-card">
-                    <food-card food-item-id="2"></food-card>
-                    <button class="del">X</button>
-                </div>
             </div>
-            <divc class="button2">
-                <button id="edit2">Edit</button>
-                <button id="add2">Add</button>
+            <div class="button2">
+                <a href="./foodItem.html"><button id="add2">Add</button></a>
             </div>
         </div>
     </div>

@@ -22,7 +22,6 @@ window.onload = function(){
             document.getElementById('rest-tags').innerHTML += tag.tag_name;
         });
         data.food_items.forEach((item)=>{
-            let type = (item.veg == true) ? "veg" : "non-veg";
             let card = `<food-card food-item-id="${item.food_item_id}" edit></food-card>`;
             cards += card;
         });
