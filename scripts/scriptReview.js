@@ -18,6 +18,7 @@ window.onload = ()=>{
                 'rating': rating,
                 'restaurant_id': rest_id
             };
+            console.log(data);
             fetch('/api/add_review', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(data)})
             .then(()=> console.log('Review posted'))
             .catch(err=>console.log(err))

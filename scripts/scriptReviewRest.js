@@ -18,6 +18,7 @@ window.onload = function(){
         return data.reviews;
     })
     .then((reviews)=>{
+        console.log(reviews);
         let content = '';
         if(reviews.length == 0){
             document.getElementsByClassName('frame3').innerHTML = 'No one has reviewed yet';

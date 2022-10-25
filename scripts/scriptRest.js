@@ -23,7 +23,7 @@ window.onload = function(){
         });
         data.food_items.forEach((item)=>{
             let type = (item.veg == true) ? "veg" : "non-veg";
-            let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+            let card = `<food-card food-item-id="${item.food_item_id}" edit></food-card>`;
             cards += card;
         });
         console.log(cards);
@@ -38,20 +38,10 @@ window.onload = function(){
         food.forEach((item)=>{
             if(item.food_name.toLowerCase().includes(event.target.value.toLowerCase())){
                 let type = (item.veg == true) ? "veg" : "non-veg";
-                let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type=${type} price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+                let card = `<food-card food-item-id="${item.food_item_id}" edit></food-card>`;
                 cards += card;
             }
         })
         document.getElementById('food-cards').innerHTML = cards;
-    })
-
-    document.querySelectorAll('food-card').forEach((ele)=>{
-        ele.addEventListener('change',(event)=>{
-            fetch('/api/edit_food_item_cart', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ 'food_item_id': event.target.id, 'quantity': event.target.quantity})})
-            .then((res)=>{
-                return res.json();
-            })
-            .catch((err)=> console.log(err))
-        });
     })
 }

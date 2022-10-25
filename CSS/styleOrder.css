@@ -276,7 +276,7 @@ body{
     flex-grow: 1;
 }
 
-.orders{
+#orders{
     display: flex; 
     flex-direction: column;
     justify-content: center;
