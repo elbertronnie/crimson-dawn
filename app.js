@@ -104,7 +104,7 @@ app.post('/restaurant/register', async (req, res) => {
     req.session.regenerate(() => {
         req.session.restaurant_id = result.rows[0].restaurant_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('./');
+        res.redirect('./profileRest.html');
     });
 });
 
@@ -144,7 +144,7 @@ app.post('/restaurant/login', async (req, res) => {
     req.session.regenerate(() => {
         req.session.restaurant_id = rows[0].restaurant_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('./');
+        res.redirect('./profileRest.html');
     });
 });
 
@@ -276,6 +276,7 @@ app.post('/api/add_food_item_cart', restrict_customer, async (req, res) => {
         );
         res.json({ done: true });
     } catch(e) {
+        console.log(e);
         res.json({ done: false });
     }
 });
@@ -286,18 +287,18 @@ app.post('/api/edit_food_item_cart', restrict_customer, async (req, res) => {
     try {
         await pool.query(
             `UPDATE carts SET 
-                food_item_id = COALESCE($2, food_item_id),
                 quantity = COALESCE($3, quantity)
-             WHERE costumer_id=$1`,
+             WHERE customer_id=$1 AND food_item_id=$2`,
             [req.session.customer_id, food_item_id, quantity]
         );
         res.json({ done: true });
     } catch(e) {
+        console.log(e);
         res.json({ done: false });
     }
 });
 
-app.delete('/api/delete_food_item_cart', restrict_customer, async (req, res) => {
+app.post('/api/delete_food_item_cart', restrict_customer, async (req, res) => {
     let { food_item_id } = req.body;
 
     try {
@@ -307,6 +308,7 @@ app.delete('/api/delete_food_item_cart', restrict_customer, async (req, res) => 
         );
         res.json({ done: true });
     } catch(e) {
+        console.log(e);
         res.json({ done: false });
     }
 });
@@ -390,7 +392,7 @@ app.post('/api/add_food_item', restrict_restaurant, async (req, res) => {
     }
 });
 
-app.delete('/api/delete_food_item', restrict_restaurant, async (req, res) => {
+app.post('/api/delete_food_item', restrict_restaurant, async (req, res) => {
     let { food_item_id } = req.body;
 
     try {
@@ -425,7 +427,7 @@ app.post('/api/food_item', async (req, res) => {
         );
 
         let rating_result = await pool.query(
-            `SELECT AVG(rating) AS rating, COUNT(rating_food_id) AS num_reviews FROM rating_foods 
+            `SELECT TO_CHAR(AVG(rating), '9D9') AS rating, COUNT(rating_food_id) AS num_reviews FROM rating_foods
              WHERE food_item_id=$1`,
             [food_item_id]
         );
@@ -464,13 +466,14 @@ app.post('/api/restaurant', async (req, res) => {
         );
 
         let review_result = await pool.query(
-            `SELECT AVG(rating) AS rating, 
+            `SELECT TO_CHAR(AVG(rating), '9D9') AS rating, 
              COALESCE(ARRAY_AGG(JSON_BUILD_OBJECT(
                 'name', customers.name, 
                 'rating', rating, 
                 'review', review)) 
              FILTER (WHERE rating IS NOT NULL), '{}') AS reviews
-             FROM restaurants NATURAL LEFT OUTER JOIN review_restaurants NATURAL LEFT OUTER JOIN customers
+             FROM restaurants NATURAL LEFT OUTER JOIN review_restaurants LEFT OUTER JOIN customers 
+                ON review_restaurants.customer_id = customers.customer_id
              WHERE restaurant_id=$1
              GROUP BY restaurant_id`,
             [restaurant_id]
@@ -559,7 +562,11 @@ app.post('/api/restaurant_orders', restrict_restaurant, async (req, res) => {
         [req.session.restaurant_id, req.body.completed]
     );
 
-    res.json(result.rows[0]);
+    if(result.rows.length == 0){
+        res.json({ orders: [] });
+    } else {
+        res.json(result.rows[0]);
+    }
 });
 
 app.post('/api/restaurant_order_complete', restrict_restaurant, async (req, res) => {
@@ -567,12 +574,13 @@ app.post('/api/restaurant_order_complete', restrict_restaurant, async (req, res)
         await pool.query(
             `UPDATE orders SET
                 completed = TRUE
-             WHERE order_id=$2 AND restaurant_id=$1`,
+             WHERE order_id=$2 AND food_item_id IN (SELECT food_item_id from food_items WHERE restaurant_id=$1)`,
             [req.session.restaurant_id, req.body.order_id]
         );
 
         res.json({ done: true });
     } catch(e){
+        console.log(e);
         res.json({ done: false });
     }
 });
@@ -632,18 +640,20 @@ app.post('/api/upload_food_image', restrict_restaurant, upload.single('image'), 
 });
 
 app.post('/api/place_order', restrict_customer, async (req, res) => {
+    console.log(req.body);
     try{
         await pool.query(
-            `WITH deleted AS (DELETE FROM cart WHERE customer_id=$1 
+            `WITH deleted AS (DELETE FROM carts WHERE customer_id=$1 
                               RETURNING food_item_id, customer_id, quantity)
              INSERT INTO orders(food_item_id, customer_id, quantity, timestamp, delivery_location, completed)
              SELECT food_item_id, customer_id, quantity, 
-                    $2 AS timestamp, $3 AS delivery_location, FALSE as completed`,
+                    $2 AS timestamp, $3 AS delivery_location, FALSE as completed FROM deleted`,
             [req.session.customer_id, new Date(), req.body.delivery_location]
         ); 
 
         res.json({ done: true });
     } catch(e){
+        console.log(e);
         res.json({ done: false });
     }
 });
@@ -705,7 +715,11 @@ app.post('/api/customer_orders', restrict_customer, async (req, res) => {
         [req.session.customer_id, req.body.completed]
     );
 
-    res.json(result.rows[0]);
+    if(result.rows.length == 0){
+        res.json({ orders: []});
+    } else {
+        res.json(result.rows[0]);
+    }
 });
 
 app.post('/api/search_restaurants', restrict_customer, async (req, res) => {

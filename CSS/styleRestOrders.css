@@ -415,3 +415,27 @@ body{
     align-self: stretch;
     flex-grow: 0;
 }
+
+.card-container{
+    display: flex;
+    gap: 31px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.complete-button{
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    padding: 16px;
+    background: #6B4EFF;
+    border-radius: 32px;
+}
+
+.complete-button:hover{
+    border: 1px solid #6B4EFF;
+    color: #6b4eff;
+    background: #F7F9FA;
+    transition: 0.2s;
+}

@@ -21,6 +21,7 @@ window.onload = ()=>{
             console.log(data);
             fetch('/api/add_review', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(data)})
             .then(()=> console.log('Review posted'))
+            .then(() => window.location.href = `./restaurants.html?restaurant_id=${rest_id}`)
             .catch(err=>console.log(err))
         }
     })

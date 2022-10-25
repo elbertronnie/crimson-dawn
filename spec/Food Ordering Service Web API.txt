@@ -96,7 +96,7 @@ response: {
     done,
 }
 
-DELETE /api/delete_food_item_cart
+POST /api/delete_food_item_cart
 requires authentication as customer
 request: {
     food_item_id,
@@ -170,7 +170,7 @@ response: {
     done,
 }
 
-DELETE /api/delete_food_item
+POST /api/delete_food_item
 requires authentication as restaurant
 request: {
     food_item_id,

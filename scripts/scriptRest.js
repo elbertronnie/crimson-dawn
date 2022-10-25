@@ -1,4 +1,5 @@
-window.onload = function(){
+window.onload = async () => {
+    let customer_data = await (await fetch('/api/customer_details')).json()
 
     let food;
     let rest_id = Number((new URL(document.location)).searchParams.get('restaurant_id'));
@@ -22,7 +23,11 @@ window.onload = function(){
             document.getElementById('rest-tags').innerHTML += tag.tag_name;
         });
         data.food_items.forEach((item)=>{
-            let card = `<food-card food-item-id="${item.food_item_id}" edit></food-card>`;
+            let quantities = customer_data.cart.filter(({food_item_id}) => food_item_id == item.food_item_id)
+                                               .map(({quantity}) => quantity);
+            let count = quantities.length == 0 ? 0 : quantities[0];
+
+            let card = `<food-card food-item-id="${item.food_item_id}" edit count="${count}"></food-card>`;
             cards += card;
         });
         console.log(cards);

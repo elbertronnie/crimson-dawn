@@ -141,6 +141,7 @@
                 console.log(data);
                 fetch('/api/add_rating', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(data)})
                 .then(()=> console.log('Review posted'))
+                .then(() => window.location.href = "./orderHistory.html")
                 .catch(err=>console.log(err))
             }
         })

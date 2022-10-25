@@ -1,10 +1,12 @@
 window.onload = async ()=>{
 
-    let pending_data = await (await fetch('/api/customer_orders', {
+    let pending_data = await (await fetch('/api/restaurant_orders', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ completed: false })
     })).json();
+
+    console.log(pending_data);
     
     let orders = '<div class="text">PENDING</div>';
     pending_data.orders.forEach(ele => {
@@ -15,15 +17,18 @@ window.onload = async ()=>{
                 </div>
                 <div class="food">
                     <div class="restName">
-                        ${ele.food_item.restaurant.name}
+                        ${ele.customer.name} - ${ele.delivery_location}
                     </div>
-                    <a style="text-decoration: none;" href="./ratingFood.html?food_item_id=${ele.food_item.food_item_id}"><food-card food-item-id="${ele.food_item.food_item_id}" count="${ele.quantity}"></food-card></a>
+                    <div class="card-container">
+                        <food-card food-item-id="${ele.food_item.food_item_id}" count="${ele.quantity}"></food-card>
+                        <button class="complete-button" data-order-id="${ele.order_id}">COMPLETED</button>
+                    </div>
                 </div>
             </div>`
         orders += order;
     });
     
-    let completed_data = await (await fetch('/api/customer_orders', {
+    let completed_data = await (await fetch('/api/restaurant_orders', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ completed: true })
@@ -38,9 +43,9 @@ window.onload = async ()=>{
                 </div>
                 <div class="food">
                     <div class="restName">
-                        ${ele.food_item.restaurant.name}
+                        ${ele.customer.name} - ${ele.delivery_location}
                     </div>
-                    <a style="text-decoration: none;" href="./ratingFood.html?food_item_id=${ele.food_item.food_item_id}"><food-card food-item-id="${ele.food_item.food_item_id}" count="${ele.quantity}"></food-card></a>
+                    <food-card food-item-id="${ele.food_item.food_item_id}" count="${ele.quantity}"></food-card>
                 </div>
             </div>`
         orders += order;
@@ -54,4 +59,17 @@ window.onload = async ()=>{
         .then(() => window.location.href = "/")
         .catch(err => console.log(err))
     });
+
+    for(let el of document.getElementsByClassName('complete-button')){
+        el.addEventListener('click', async ()=>{
+            let result = await (await fetch('/api/restaurant_order_complete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order_id: Number(el.getAttribute('data-order-id'))})
+            })).json();
+            if(result.done){
+                window.location.reload();
+            }
+        });
+    }
 }
