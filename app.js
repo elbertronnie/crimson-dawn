@@ -104,7 +104,7 @@ app.post('/restaurant/register', async (req, res) => {
     req.session.regenerate(() => {
         req.session.restaurant_id = result.rows[0].restaurant_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('./');
+        res.redirect('./profileRest.html');
     });
 });
 
@@ -144,7 +144,7 @@ app.post('/restaurant/login', async (req, res) => {
     req.session.regenerate(() => {
         req.session.restaurant_id = rows[0].restaurant_id;
         req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
-        res.redirect('./');
+        res.redirect('./profileRest.html');
     });
 });
 
@@ -562,7 +562,11 @@ app.post('/api/restaurant_orders', restrict_restaurant, async (req, res) => {
         [req.session.restaurant_id, req.body.completed]
     );
 
-    res.json(result.rows[0]);
+    if(result.rows.length == 0){
+        res.json({ orders: [] });
+    } else {
+        res.json(result.rows[0]);
+    }
 });
 
 app.post('/api/restaurant_order_complete', restrict_restaurant, async (req, res) => {
@@ -570,12 +574,13 @@ app.post('/api/restaurant_order_complete', restrict_restaurant, async (req, res)
         await pool.query(
             `UPDATE orders SET
                 completed = TRUE
-             WHERE order_id=$2 AND restaurant_id=$1`,
+             WHERE order_id=$2 AND food_item_id IN (SELECT food_item_id from food_items WHERE restaurant_id=$1)`,
             [req.session.restaurant_id, req.body.order_id]
         );
 
         res.json({ done: true });
     } catch(e){
+        console.log(e);
         res.json({ done: false });
     }
 });
@@ -710,7 +715,11 @@ app.post('/api/customer_orders', restrict_customer, async (req, res) => {
         [req.session.customer_id, req.body.completed]
     );
 
-    res.json(result.rows[0]);
+    if(result.rows.length == 0){
+        res.json({ orders: []});
+    } else {
+        res.json(result.rows[0]);
+    }
 });
 
 app.post('/api/search_restaurants', restrict_customer, async (req, res) => {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../CSS/styleRestOrders.css">
+    <script src="../scripts/scriptRestOrders.js"></script>
+    <script src="../components/food-card.js"></script>
+    <script src="../components/food-button.js"></script>
+    <script src="../components/food-type-icon.js"></script>
+    <script src="../components/rating-pill.js"></script>
+    <script src="../components/review-pill.js"></script>
+    <script src="../components/serving-pill.js"></script>
+    <script src="../components/custom-navbar.js"></script>
+    <script src="../components/custom-footer.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="frame2">
+            <div class="f2-1">
+                <div class="back">
+                    <div class="selectors">
+                        <a href="profileRest.html"><div class="profile">Profile</div></a>
+                        <a href="orders.html"><div class="orderHistory">Orders</div></a>
+                        <div class="logout" id="logout">Log out</div>
+                    </div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="f2-2">
+                <div id="orders">
+                    
+                    <div class="order b">
+                        <div class="date">
+                            <div class="text">01/10/2021</div>
+                        </div>
+                        <div class="food">
+                            <div class="restName">
+                                Chawla Chicken
+                            </div>
+                           <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <!-- <div class="total">
+                                <div class="text2-1">Total:</div>
+                                <div class="amount">₹2000</div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="order b">
+                        <div class="date">
+                            <div class="text">01/10/2021</div>
+                        </div>
+                        <div class="food">
+                            <div class="restName">
+                                Chawla Chicken
+                            </div>
+                           <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <!-- <div class="total">
+                                <div class="text2-1">Total:</div>
+                                <div class="amount">₹2000</div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="order b">
+                        <div class="date">
+                            <div class="text">01/10/2021</div>
+                        </div>
+                        <div class="food">
+                            <div class="restName">
+                                Chawla Chicken
+                            </div>
+                           <food-card image="../images/Pizza.png" title="Pizza" type="veg" price="1000" rating="4.3" review="23" serving="2" count="2"></food-card>
+                            <!-- <div class="total">
+                                <div class="text2-1">Total:</div>
+                                <div class="amount">₹2000</div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <custom-footer></custom-footer>
+    </div>
+</body>
+</html>
