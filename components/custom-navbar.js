@@ -75,7 +75,7 @@ input[type='text']{
     }
 
     .title{
-        /* Zango */
+        /* Kravingz */
 
         /* /Title2 */
 
@@ -207,7 +207,7 @@ input[type='text']{
 </style>
 
 <div class="navbar">
-    <div class="left"><div class="title">Zango</div></div>
+    <div class="left"><div class="title">Kravingz</div></div>
     <div class="center">
         <div class="location-frame">
             <div class="map-pin">

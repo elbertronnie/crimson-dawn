@@ -74,7 +74,7 @@ customElements.define('custom-footer',
     }
     
     .title{
-        /* Zango */
+        /* Kravingz */
 
         /* /Title1 */
 
@@ -192,7 +192,7 @@ customElements.define('custom-footer',
 
 <div class="footer">
     <div class="left">
-        <div class="title">Zango</div>
+        <div class="title">Kravingz</div>
         <div class="contact">Contact Us</div>
     </div>
     <div class="right">
