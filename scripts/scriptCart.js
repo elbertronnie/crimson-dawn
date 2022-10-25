@@ -13,7 +13,7 @@ window.onload = ()=>{
         return res.json();
     })
     .then((data)=>{
-        
+        console.log(data);
         address.innerHTML = data.address;
 
         let list = data.cart;
@@ -21,7 +21,7 @@ window.onload = ()=>{
             let type = (item.veg == true) ? "veg" : "non-veg";
             let card = `<div class="item">
                             <div class="food">
-                            <food-card image="../images/Pizza.png" id="${item.food_item_id}" title="${item.food_name}" type=${type} price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="${item.quantity}"></food-card>
+                            <food-card food-item-id="${item.food_item_id}" edit></food-card>
                         </div>
                         <div class="cost">₹${item.price * item.quantity}</div>
                     </div>`;
@@ -33,18 +33,20 @@ window.onload = ()=>{
     });
 
     proceed.addEventListener('click',(event)=>{
-        console.log(event);
-        alert('Your order has been placed!');
+        let address = document.getElementById('address').value;
+        fetch('/api/place_order', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'delivery-location': address})})
+        .then(res => console.log(res.json()))
+        .catch(err => console.log(err))
     })
 
-    document.querySelectorAll('food-card').forEach((ele)=>{
-        ele.addEventListener('change',(event)=>{
-            fetch('/api/edit_food_item_cart', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ 'food_item_id': event.target.id, 'quantity': event.target.quantity})})
-            .then((res)=>{
-                return res.json();
-            })
-            .catch((err)=> console.log(err))
-        });
-    })
+    // document.querySelectorAll('food-card').forEach((ele)=>{
+    //     ele.addEventListener('change',(event)=>{
+    //         fetch('/api/edit_food_item_cart', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({ 'food_item_id': event.target.id, 'quantity': event.target.quantity})})
+    //         .then((res)=>{
+    //             return res.json();
+    //         })
+    //         .catch((err)=> console.log(err))
+    //     });
+    // })
 }
 

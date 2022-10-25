@@ -3,7 +3,8 @@ window.onload = ()=>{
     fetch('/api/customer_orders', {method: 'POST'})
     .then(res => {return res.json();})
     .then(data => {
-        let iter = -1;
+        console.log(orders);
+        let orders = '';
         data.orders.forEach(ele => {
             let type = (ele.food_item.veg == true) ? "veg" : "non-veg";
             let order = 
@@ -15,13 +16,15 @@ window.onload = ()=>{
                     <div class="restName">
                         ${ele.food_item.restaurant.name}
                     </div>
-                    <a id="${'rate'+ (++iter)}"><food-card id="${ele.food_item.food_item_id}" image="${ele.food_item.food_image_url}" title="${ele.food_item.food_name}" type=${type} price="${ele.food_item.price}" serving="${ele.food_item.serving}" count="${ele.quantity}"></food-card></a>
+                    <a href="./ratingFood.html?food_item_id=${ele.food_item.food_item_id}"><food-card food-item-id="${ele.food_item.food_item_id}"></food-card></a>
                 </div>
             </div>`
-            document.getElementById(`'rate'+${iter}`).href = `./ratingFood.html?food_item_id=${ele.food_item.food_item_id}`;
+            orders += order;
         });
+        console.log(orders);
+        document.getElementById('orders').innerHTML = orders;
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 
     
 
@@ -29,5 +32,5 @@ window.onload = ()=>{
         fetch('/logout', {method: 'POST'})
         .then(res => console.log(res.json()))
         .catch(err => console.log(err))
-    })
+    });
 }
