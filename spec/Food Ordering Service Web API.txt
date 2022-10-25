@@ -24,7 +24,6 @@ Food Ordering Service Web API
 /api/add_review
 /api/restaurant_card
 /api/customer_orders
-
 /api/search_restaurants
 /api/search_food_items
 

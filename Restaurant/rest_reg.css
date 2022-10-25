@@ -1,0 +1,498 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+    gap: 45px;
+
+    position: relative;
+    /* width: 1144px;
+height: 2834px; */
+
+    /* background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+}
+
+.image_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px 40px;
+    gap: 32px;
+
+    width: 720px;
+    height: 535px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.restTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8px;
+
+    width: 640px;
+    height: 114px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+
+}
+
+.nameRate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+
+    width: 640px;
+    height: 56px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.restName {
+    width: 582px;
+    height: 56px;
+
+    /* /Title1 */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 56px;
+    /* identical to box height, or 117% */
+
+
+    /* Ink/Darkest */
+
+    color: #090A0A;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+
+.ratePill {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
+    gap: 2px;
+
+    width: 58px;
+    height: 24px;
+
+    border-radius: 32px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+
+}
+
+.rateText {
+    width: 24px;
+    height: 16px;
+
+    /* Regular/None/Regular */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height, or 100% */
+
+
+    /* Primary/Base */
+
+    color: #6B4EFF;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.rateStar {
+    width: 16px;
+    height: 16px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.vecStar {
+    position: absolute;
+    left: 8.33%;
+    right: 8.33%;
+    top: 8.33%;
+    bottom: 12.42%;
+
+    /* Primary/Base */
+
+    background: #6B4EFF;
+    /* Primary/Base */
+
+    border: 1.5px solid #6B4EFF;
+}
+
+.tags {
+    width: 640px;
+    height: 24px;
+
+    /* Large/Normal/Medium */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
+
+
+    /* Ink/Darkest */
+
+    color: #090A0A;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.rest_addr {
+    width: 640px;
+    height: 18px;
+
+    /* Large/None/Regular */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    /* identical to box height, or 100% */
+
+
+    /* Ink/Darkest */
+
+    color: #090A0A;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.rest_image_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    width: 640px;
+    height: 325px;
+
+    background: #FFFFFF;
+    /* Shadow/Large */
+
+    box-shadow: 0px 1px 24px 8px rgba(20, 20, 20, 0.08);
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.rest_image {
+    width: 261px;
+    height: 256px;
+
+    /* background: url(/images/restaurantimage.png); */
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.add_image_option {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+
+    width: 359px;
+    height: 32px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+.math_plus {
+    width: 32px;
+    height: 32px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.math_vector {
+    position: absolute;
+    left: 20.83%;
+    right: 20.83%;
+    top: 20.83%;
+    bottom: 20.83%;
+
+    /* Ink/Light */
+
+    border: 1.5px solid #6C7072;
+}
+
+.add_image_option_text {
+    width: 266px;
+    height: 32px;
+
+    /* /Title3 */
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    /* identical to box height, or 133% */
+
+    text-align: center;
+
+    /* Ink/Light */
+
+    color: #6C7072;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.phone_number{
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px 40px;
+gap: 23px;
+
+width: 722px;
+height: 103px;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 2;
+flex-grow: 0;
+}
+
+.numberText{
+    width: 174px;
+height: 32px;
+
+/* /Title3 */
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 32px;
+/* identical to box height, or 133% */
+
+
+/* Ink/Darker */
+
+color: #202325;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+.addnum{
+    display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 25px;
+
+width: 642px;
+height: 48px;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.phone_box{
+    width: 435px;
+height: 48px;
+
+border-radius: 8px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 1;
+}
+.phone_text{
+    position: absolute;
+height: 16px;
+left: 16px;
+right: 16px;
+top: calc(50% - 16px/2);
+
+/* Regular/None/Regular */
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 16px;
+/* identical to box height, or 100% */
+
+
+/* Ink/Lighter */
+
+color: #72777A;
+}
+.phone_field{
+    /* position: absolute; */
+left: 0px;
+right: 0px;
+top: 0px;
+bottom: 0px;
+
+/* Sky/White */
+
+background: #FFFFFF;
+/* Primary/Base */
+
+border: 1px solid #6B4EFF;
+border-radius: 8px;
+}
+.fields{
+    min-width: 160px;
+    height: 40px;
+    border-radius: 8px;
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+
+.right_action_button{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 8px 16px;
+
+width: 182px;
+height: 32px;
+
+/* Primary/Base */
+
+background: #6B4EFF;
+border-radius: 48px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+
+.add_phone_text{
+    width: 150px;
+height: 16px;
+
+/* Regular/None/Medium */
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 16px;
+/* identical to box height, or 100% */
+
+text-align: center;
+
+/* Sky/White */
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+

@@ -123,7 +123,7 @@ app.post('/login', async (req, res) => {
 app.post('/restaurant/login', async (req, res) => {
     let { email, password, remember_me } = req.body;
 
-    let { rows } = await pool.query("SELECT restaurant_id, password FROM customers WHERE email=$1", [email]);
+    let { rows } = await pool.query("SELECT restaurant_id, password FROM restaurants WHERE email=$1", [email]);
     
     if(rows.length === 0) {
         return res.send("You have not registered yet");
@@ -149,7 +149,7 @@ app.post('/logout', (req, res) => {
 
 
 app.get('/images/:id', async (req, res) => {
-    let result = await pool.query(`SELECT buffer, mimetype from image_files WHERE image_id=$1`,[req.params.id]);
+    let result = await pool.query(`SELECT buffer, mimetype from images WHERE image_id=$1`,[req.params.id]);
     let { buffer, mimetype } = result.rows[0];
     let img = Buffer.from(buffer, 'base64');
 
