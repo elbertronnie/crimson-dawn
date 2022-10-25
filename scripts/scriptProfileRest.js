@@ -20,6 +20,7 @@ window.onload = ()=>{
         .then(res => res.json())
         .then(data =>{
             console.log(data);
+            document.getElementById('food-item').value = data.restaurant_id;
             document.getElementById('name').value = data.name;
             document.getElementById('email').value = data.email;
             document.getElementById('address').value = data.address;
@@ -64,6 +65,7 @@ window.onload = ()=>{
             document.querySelectorAll('.del').forEach(ele => {
                 console.log(ele);
                 ele.addEventListener('click', (event)=>{
+                    console.log('clicked del');
                     fetch('/api/delete_food_item', {method: 'DELETE', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': Number(event.target.name)})})
                     .then(res => console.log(res.json()))
                     .catch(err => console.log(err))

@@ -1,1 +1,0 @@
-api/food_item
