@@ -162,7 +162,7 @@ body{
     gap: 32px;
     
     width: 160px;
-    height: 229px;
+    height: 280px;
     
     flex: none;
     order: 0;
@@ -172,7 +172,7 @@ body{
 }
 
 .line{
-    width: 227px;
+    width: 278px;
     height: 0px;
     border: 1px solid #CDCFD0;
     transform: rotate(90deg);
@@ -181,7 +181,7 @@ body{
     flex-grow: 0;
 
     position: absolute;
-    left: 42px;
+    left: 20px;
 }
 
 .selectors{
@@ -193,7 +193,6 @@ body{
     gap: 32px;
 
     width: 117px;
-    height: 71px;
 
     flex: none;
     order: 0;
@@ -214,7 +213,19 @@ body{
     color: #000000;
     
     flex: none;
-    order: 0;
+    flex-grow: 0;
+}
+
+.cart{
+    width: 117px;
+    height: 24px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #000000;
+    flex: none;
     flex-grow: 0;
 }
 
@@ -231,7 +242,6 @@ body{
     color: #000000;
 
     flex: none;
-    order: 1;
     flex-grow: 0;
 }
 
@@ -246,9 +256,8 @@ body{
     line-height: 24px;
 
     color: #D3180C;
-
+    cursor: pointer;
     flex: none;
-    order: 2;
     flex-grow: 0;
 
     text-decoration: underline;
@@ -306,7 +315,6 @@ body{
     padding: 8px;
     gap: 10px;
 
-    width: 115px;
 
     background: #E3E5E6;
     border-radius: 16px;

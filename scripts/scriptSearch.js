@@ -1,5 +1,3 @@
-const { event } = require("jquery");
-
 window.onload = ()=>{
     fetch('/api/search_restaurants', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'text': ''})})
     .then(( res => res.json()))
@@ -9,8 +7,9 @@ window.onload = ()=>{
         }
         else{    
             let cards = '';
-            data.forEach(element => {
-                let card = // data
+            data.forEach(item => {
+                let type = (item.veg == true) ? "veg" : "non-veg";
+                let card = `<restaurant-card id="${item.restaurant_id}" image="${item.restaurant_image_url}" rating="${item.rating}" review="${item.review}" buys="${item.buys}" title="${item.name}" type="${type}" address="${item.address}"></restaurant-card>`;
                 cards += card;
             });
             document.getElementById('content').innerHTML = cards;
@@ -19,7 +18,7 @@ window.onload = ()=>{
     .then(()=>{
         document.querySelectorAll('restuarant-cards').forEach((ele)=>{
             ele.addEventListener('click',(event)=>{
-                fetch('/api/restaurant', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.restaurant_id})})
+                fetch('/api/restaurant', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.id})})
                 .then(res => res.json())
                 .catch((err)=> console.log(err))
             })
@@ -36,8 +35,9 @@ window.onload = ()=>{
         }
         else{    
             let cards = '';
-            data.forEach(element => {
-                let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+            data.forEach(item => {
+                let type = (item.veg == true) ? "veg" : "non-veg";
+                let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
                 cards += card;
             });
             document.getElementById('cards').innerHTML = cards;
@@ -68,8 +68,9 @@ window.onload = ()=>{
             }
             else{    
                 let cards = '';
-                data.forEach(element => {
-                    let card = // data
+                data.forEach(item => {
+                    let type = (item.veg == true) ? "veg" : "non-veg";
+                    let card = `<restaurant-card id="${item.restaurant_id}" image="${item.restaurant_image_url}" rating="${item.rating}" review="${item.review}" buys="${item.buys}" title="${item.name}" type="${type}" address="${item.address}"></restaurant-card>`;
                     cards += card;
                 });
                 document.getElementById('content').innerHTML = cards;
@@ -78,7 +79,7 @@ window.onload = ()=>{
         .then(()=>{
             document.querySelectorAll('restuarant-cards').forEach((ele)=>{
                 ele.addEventListener('click',(event)=>{
-                    fetch('/api/restaurant'+event.target.restaurant_id, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.restaurant_id})})
+                    fetch('/api/restaurant'+event.target.restaurant_id, {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': event.target.id})})
                     .then(res => res.json())
                     .catch((err)=> console.log(err))
                 })
@@ -95,8 +96,9 @@ window.onload = ()=>{
             }
             else{    
                 let cards = '';
-                data.forEach(element => {
-                    let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+                data.forEach(item => {
+                    let type = (item.veg == true) ? "veg" : "non-veg";
+                    let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
                     cards += card;
                 });
                 document.getElementById('cards').innerHTML = cards;

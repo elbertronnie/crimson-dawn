@@ -13,14 +13,15 @@ window.onload = ()=>{
         return res.json();
     })
     .then((data)=>{
-
+        
         address.innerHTML = data.address;
 
         let list = data.cart;
         list.forEach((item)=>{
+            let type = (item.veg == true) ? "veg" : "non-veg";
             let card = `<div class="item">
                             <div class="food">
-                            <food-card image="../images/Pizza.png" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="${item.quantity}"></food-card>
+                            <food-card image="../images/Pizza.png" id="${item.food_item_id}" title="${item.food_name}" type=${type} price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="${item.quantity}"></food-card>
                         </div>
                         <div class="cost">₹${item.price * item.quantity}</div>
                     </div>`;

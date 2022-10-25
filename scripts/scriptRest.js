@@ -3,6 +3,9 @@ window.onload = function(){
     let food;
     let rest_id = Number((new URL(document.location)).searchParams.get('restaurant_id'));
     console.log(rest_id);
+
+    document.getElementById('review').href = `./review.html?restaurant_id=${rest_id}`;
+    document.getElementById('rest-review').href = `./reviewRest.html?restaurant_id=${rest_id}`;
     fetch('/api/restaurant', {method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'restaurant_id': rest_id})})
     .then((res)=>{
         return res.json();
@@ -19,7 +22,8 @@ window.onload = function(){
             document.getElementById('rest-tags').innerHTML += tag.tag_name;
         });
         data.food_items.forEach((item)=>{
-            let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+            let type = (item.veg == true) ? "veg" : "non-veg";
+            let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
             cards += card;
         });
         console.log(cards);
@@ -33,7 +37,8 @@ window.onload = function(){
         let cards = '';
         food.forEach((item)=>{
             if(item.food_name.toLowerCase().includes(event.target.value.toLowerCase())){
-                let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type="${item.type}" price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
+                let type = (item.veg == true) ? "veg" : "non-veg";
+                let card = `<food-card image="${item.food_image_url}" id="${item.food_item_id}" title="${item.food_name}" type=${type} price="₹${item.price}" rating="${0}" review="${0}" serving="${item.serving}" count="0"></food-card>`;
                 cards += card;
             }
         })

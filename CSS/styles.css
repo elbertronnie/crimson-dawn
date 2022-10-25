@@ -1,4 +1,4 @@
-body {
+* {
     margin: 0px;
 }
 
@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 0px;
-    gap: 32px;
+    gap: 52px;
 
     position: relative;
 
@@ -25,7 +25,6 @@ body {
     /* Inside auto layout */
 
     flex: none;
-    order: 0;
     align-self: stretch;
     flex-grow: 1;
 
@@ -162,7 +161,6 @@ body {
     /* Inside auto layout */
 
     flex: none;
-    order: 1;
     align-self: stretch;
     flex-grow: 0;
 }
@@ -252,7 +250,6 @@ body {
     /* Inside auto layout */
 
     flex: none;
-    order: 2;
     align-self: stretch;
     flex-grow: 0;
 }
