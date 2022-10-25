@@ -27,7 +27,7 @@ app.use(session({
     secret: process.env.EXPRESS_SESSION_SECRET,
 }));
 
-app.use(express.static("Auth"));
+app.use(express.static("auth"));
 app.use(express.static("."));
 
 
