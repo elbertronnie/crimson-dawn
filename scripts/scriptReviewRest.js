@@ -10,7 +10,7 @@ window.onload = function(){
         document.getElementById('rest-name').innerHTML = data.name;
         document.getElementById('rest-address').innerHTML = data.address;
         document.getElementById('rest-rating').innerHTML = data.rating;
-        document.getElementById('rest-img').style.backgroundImage().url = data.restaurant_image_url;
+        document.getElementById('rest-img').style.backgroundImage.url = data.restaurant_image_url;
         data.tags.forEach((tag) => {
             document.getElementById('rest-tags').innerHTML += tag.tag_name;
         });
