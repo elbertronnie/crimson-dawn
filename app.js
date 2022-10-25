@@ -215,7 +215,7 @@ app.get('/api/restaurant_details', restrict_restaurant, async (req, res) => {
     );
 
     let tag_result = await pool.query(
-        `SELECT tag_name FROM restaurant_tags NATURAL JOIN tags WHERE restaurant_id=$1`,
+        `SELECT tag_name FROM restaurant_tags NATURAL JOIN tag WHERE restaurant_id=$1`,
         [req.session.restaurant_id]
     );
 

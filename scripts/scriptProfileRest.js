@@ -47,8 +47,8 @@ window.onload = ()=>{
                 data.food_items.forEach((item)=>{
                     let card = 
                             `<div class="food-card">
-                                <a href="./foodItem.html?food_item_id=${item.food_item_id}"><food-card food-item-id="${item.food_item_id}"></food-card>
-                                <button class="del" id="${item.food_item_id}">X</button>
+                            <a href="./foodItem.html?food_item_id=${item.food_item_id}"><food-card food-item-id="${item.food_item_id}"></food-card></a>
+                                <button class="del" name="${item.food_item_id}">X</button>
                             </div>`;
                     cards += card;
                 });
@@ -56,11 +56,15 @@ window.onload = ()=>{
                 document.getElementById('food-cards').innerHTML = cards;
             })
             .catch(err => console.log(err))
+
+            return rest_id;
         })
-        .then(()=>{
+        .then((rest_id)=>{
+            console.log('for del');
             document.querySelectorAll('.del').forEach(ele => {
+                console.log(ele);
                 ele.addEventListener('click', (event)=>{
-                    fetch('/api/delete_food_item', {method: 'DELETE', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': event.target.id})})
+                    fetch('/api/delete_food_item', {method: 'DELETE', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'food_item_id': Number(event.target.name)})})
                     .then(res => console.log(res.json()))
                     .catch(err => console.log(err))
                 })
@@ -72,7 +76,7 @@ window.onload = ()=>{
     
     document.getElementById('add-more-tag').addEventListener('click',()=>{
         let value = document.getElementById('more-tags').value;
-
+        console.log(value);
         fetch('/api/add_tag',{method: 'POST', headers: { 'Content-Type': 'application/json'}, body: JSON.stringify({'name': value})})
         .then(res => {
             console.log(res.json);

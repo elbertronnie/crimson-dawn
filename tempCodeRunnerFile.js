@@ -1,1 +1,1 @@
-/api/restaurant_details
+api/food_item
