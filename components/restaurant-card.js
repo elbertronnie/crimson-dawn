@@ -10,6 +10,8 @@ customElements.define('restaurant-card',
     .restaurant-card{
         /* Restaurant Card */
 
+        font-size: 0;
+        line-height: 0;
         overflow: hidden;
 
         /* Auto layout */
@@ -226,6 +228,7 @@ customElements.define('restaurant-card',
                 this.buys = data.num_buys;
                 this.type = data.veg ? 'veg' : 'non-veg';
                 this.address = data.address;
+                console.log(data);
             }, 0);
         }
         
@@ -243,15 +246,15 @@ customElements.define('restaurant-card',
             } else if(name === "rating" && oldValue !== newValue){
                 const rating = this.shadowRoot.getElementById('rating');
                 rating.rating = newValue;
-                rating.style.visibility = newValue ? 'hidden' : 'visible';
+                rating.style.visibility = Number(newValue) > 0 ? 'visible' : 'hidden';
             } else if(name === "review" && oldValue !== newValue){
                 const review = this.shadowRoot.getElementById('review');
                 review.review = newValue;
-                review.style.visibility = newValue ? 'hidden' : 'visible';
+                review.style.visibility = Number(newValue) > 0 ? 'visible' : 'hidden';
             } else if(name === "buys" && oldValue !== newValue){
                 const buys = this.shadowRoot.getElementById('buys');
                 buys.buys = newValue;
-                buys.style.visibility = newValue ? 'hidden' : 'visible';
+                buys.style.visibility = Number(newValue) > 0 ? 'visible' : 'hidden';
             } else if(name === "type" && oldValue !== newValue){
                 this.shadowRoot.getElementById('type').type = newValue;
             } else if(name === "address" && oldValue !== newValue){

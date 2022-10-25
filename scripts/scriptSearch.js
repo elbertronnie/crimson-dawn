@@ -9,7 +9,7 @@ window.onload = ()=>{
         else{    
             let cards = '';
             data.restaurants.forEach(item => {
-                let card = `<a href="./restaurants.html?restaurant_id=${item.restaurant_id}"><restaurant-card restaurant-id="${item.restaurant_id}"></restaurant-card></a>`;
+                let card = `<a style="text-decoration: none" href="./restaurants.html?restaurant_id=${item.restaurant_id}"><restaurant-card restaurant-id="${item.restaurant_id}"></restaurant-card></a>`;
                 cards += card;
             });
             document.getElementById('content').innerHTML = cards;

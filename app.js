@@ -77,12 +77,16 @@ app.post('/register', async (req, res) => {
     if(rows.length != 0) {
         return res.send("You are already registered");
     }
-    await pool.query(
-        "INSERT INTO customers(name, email, password, address) VALUES($1, $2, $3, $4)", 
+    let result = await pool.query(
+        "INSERT INTO customers(name, email, password, address) VALUES($1, $2, $3, $4) RETURNING customer_id", 
         [name, email, await hash(password), address]
     );
 
-    res.redirect('/user/search.html');
+    req.session.regenerate(() => {
+        req.session.customer_id = result.rows[0].customer_id;
+        req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
+        res.redirect('./user/search.html');
+    });
 });
 
 app.post('/restaurant/register', async (req, res) => {
@@ -92,12 +96,16 @@ app.post('/restaurant/register', async (req, res) => {
     if(rows.length != 0) {
         return res.send("You are already registered");
     }
-    await pool.query(
-        "INSERT INTO restaurants(name, email, password, address) VALUES($1, $2, $3, $4)", 
+    let result = await pool.query(
+        "INSERT INTO restaurants(name, email, password, address) VALUES($1, $2, $3, $4) RETURNING restaurant_id",
         [store_name, email, await hash(password), store_address]
     );
 
-    res.redirect('/');
+    req.session.regenerate(() => {
+        req.session.restaurant_id = result.rows[0].restaurant_id;
+        req.session.cookie.maxAge = remember_me ? 30*24*60*60*1000 : 6*60*60*1000;
+        res.redirect('./');
+    });
 });
 
 app.post('/login', async (req, res) => {
@@ -506,7 +514,7 @@ app.post('/api/restaurant_card', async (req, res) => {
         );
 
         let review_result = await pool.query(
-            `SELECT AVG(rating) AS rating, COUNT(rating) as num_reviews
+            `SELECT TO_CHAR(AVG(rating), '9D9') AS rating, COUNT(rating) as num_reviews
              FROM restaurants NATURAL LEFT OUTER JOIN review_restaurants
              WHERE restaurant_id=$1
              GROUP BY restaurant_id`,
